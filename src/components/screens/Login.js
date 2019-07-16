@@ -55,6 +55,12 @@ class Login extends Component{
 const styles = StyleSheet.create({
   container: { 
     flex : 1,
+    marginTop : 150,
+    marginBottom : 150,
+    marginLeft : 50,
+    marginRight : 50,
+    padding: 50,
+    borderRadius : 30,
     flexDirection : 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -65,9 +71,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:20,
-    width:250,
+    marginLeft:20,
+    marginRight:20,
+    width:200,
     borderRadius:20,
   }
 });
  
+
+Login.navigationOptions = ({ /*navigation*/ }) => {
+  return {
+      header: null
+  }
+}
+
 export default Login;
