@@ -3,6 +3,7 @@ var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 import {
   StyleSheet,
   View,
+  Image,
   ImageBackground
 } from 'react-native';
 
@@ -24,7 +25,15 @@ class Login extends Component{
       style={{width: '100%', height: '100%'}}
           source={require('../screens/LoginBackgroundImage.png')}> 
       <View style={styles.container}>
-        
+
+        <Image
+      style={{width: '60%', height: '50%'}}
+      source={require('../screens/login-graphics.png')}
+
+        />
+
+
+
         <FBLogin
         style={styles.buttonContainer}
         ref={(fbLogin) => { this.fbLogin = fbLogin }}
@@ -70,7 +79,7 @@ const styles = StyleSheet.create({
     padding:25,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
+    marginTop:250,
     marginLeft:20,
     marginRight:20,
     width:200,
