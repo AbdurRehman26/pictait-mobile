@@ -27,11 +27,10 @@ class Login extends Component{
       height : 20 + '%',
       marginBottom: 10, }}
         ref={(fbLogin) => { this.fbLogin = fbLogin }}
-        permissions={["email","picture"]}
+        permissions={["email"]}
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
         onLogin={function(data){
-          console.log("Logged in!");
-          alert(data);
+          console.log(data);
           _this.setState({ user : data.credentials });
         }}
         onLogout={function(){
