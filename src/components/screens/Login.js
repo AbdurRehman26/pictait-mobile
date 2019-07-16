@@ -21,15 +21,17 @@ class Login extends Component{
       justifyContent : 'center',
       alignItems : 'center'
     }}
-    > 
+    >
 
-<FBLogin style={{ marginBottom: 10, }}
+<FBLogin style={{ 
+      height : 20 + '%',
+      marginBottom: 10, }}
         ref={(fbLogin) => { this.fbLogin = fbLogin }}
-        permissions={["email","user_friends"]}
+        permissions={["email","picture"]}
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
         onLogin={function(data){
           console.log("Logged in!");
-          console.log(data);
+          alert(data);
           _this.setState({ user : data.credentials });
         }}
         onLogout={function(){
@@ -44,17 +46,6 @@ class Login extends Component{
         onLoginNotFound={function(){
           console.log("No user logged in.");
           _this.setState({ user : null });
-        }}
-        onError={function(data){
-          console.log("ERROR");
-          console.log(data);
-        }}
-        onCancel={function(){
-          console.log("User cancelled.");
-        }}
-        onPermissionsMissing={function(data){
-          console.log("Check permissions!");
-          console.log(data);
         }}
       />
 
