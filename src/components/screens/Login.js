@@ -1,31 +1,32 @@
-import React, {Component} from 'react';
-import { Text, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
 var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
+import {
+  StyleSheet,
+  View,
+  ImageBackground
+} from 'react-native';
 
 class Login extends Component{
-  login(){
-    this.props.navigation.navigate("main");
-  }
 
-  render(){
+  constructor(props) {
+    super(props);
+    state = {
+      email   : '',
+      password: '',
+    }
+  }
+  
+  render() {
     var _this = this;
     return (
-    <TouchableOpacity
-    onPress={()=>{
-      this.login()
-    }}
-    style={{
-      height : 100 + '%',
-      width : 100 + '%',
-      flex : 1,
-      justifyContent : 'center',
-      alignItems : 'center'
-    }}
-    >
 
-<FBLogin style={{ 
-      height : 20 + '%',
-      marginBottom: 10, }}
+<ImageBackground
+      style={{width: '100%', height: '100%'}}
+          source={require('../screens/LoginBackgroundImage.png')}> 
+      <View style={styles.container}>
+        
+        <FBLogin
+        style={styles.buttonContainer}
         ref={(fbLogin) => { this.fbLogin = fbLogin }}
         permissions={["email"]}
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
@@ -34,23 +35,39 @@ class Login extends Component{
           _this.setState({ user : data.credentials });
         }}
         onLogout={function(){
-          console.log("Logged out.");
           _this.setState({ user : null });
         }}
         onLoginFound={function(data){
-          console.log("Existing login found.");
           console.log(data);
           _this.setState({ user : data.credentials });
         }}
         onLoginNotFound={function(){
-          console.log("No user logged in.");
           _this.setState({ user : null });
         }}
       />
+      </View>
+      </ImageBackground>
 
-    </TouchableOpacity>
-  );
-}
+    );
+  }
 }
 
+const styles = StyleSheet.create({
+  container: { 
+    flex : 1,
+    flexDirection : 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#DCDCDC'    
+  },
+  buttonContainer: {
+    padding:25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:250,
+    borderRadius:20,
+  }
+});
+ 
 export default Login;
