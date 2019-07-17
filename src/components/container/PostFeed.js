@@ -7,6 +7,8 @@ class PostFeed extends Component{
         super();
     }
     _renderPost({item}){
+        var _this = this;
+        console.log(_this.state);
         return <Post/>
     }
 

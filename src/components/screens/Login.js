@@ -48,8 +48,9 @@ class Login extends Component{
               _this.setState({
                 user : response.data.user,
                 token : response.data.token
-
               })
+              _this.props.navigation.navigate('main')
+
             })
             .catch((err)=>console.log(err))
   }
@@ -89,7 +90,8 @@ class Login extends Component{
           _this.setState({ user : null });
         }}
         onLoginFound={function(data){
-          // _this.loginUser(data);
+          _this.setState({ facebookUserData : data });
+          _this.loginUser(data);
         }}
         onLoginNotFound={function(){
           _this.setState({ user : null });
