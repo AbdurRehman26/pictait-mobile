@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import config from '../../config'
+
 var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
+
+
+
 import {
   StyleSheet,
   View,
@@ -17,6 +22,39 @@ class Login extends Component{
     }
   }
   
+  loginUser(data){
+
+    var _this = this;
+
+    var facebookUserData = _this.state.facebookUserData
+
+    var  postData = JSON.stringify({
+      provider_access_token : facebookUserData.credentials.token,
+      email : facebookUserData.profile.email,
+      first_name : facebookUserData.profile.name,
+      provider_id : facebookUserData.profile.id,
+      image : facebookUserData.profile.picture.data.url
+    })
+
+    fetch(config.systemConfig.baseUrl+'user', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: postData,
+    }).then((res) => res.json())
+            .then((response) =>  {
+              _this.setState({
+                user : response.data.user,
+                token : response.data.token
+
+              })
+            })
+            .catch((err)=>console.log(err))
+  }
+
+
   render() {
     var _this = this;
     return (
@@ -41,21 +79,23 @@ class Login extends Component{
         permissions={["email"]}
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
         onLogin={function(data){
-          console.log(data);
-          _this.setState({ user : data.credentials });
+
+          _this.setState({ facebookUserData : data });
+          _this.loginUser(data);
+
         }}
         onLogout={function(){
+          _this.setState({ facebookUserData : null });
           _this.setState({ user : null });
         }}
         onLoginFound={function(data){
-          console.log(data);
-          _this.setState({ user : data.credentials });
+          // _this.loginUser(data);
         }}
         onLoginNotFound={function(){
           _this.setState({ user : null });
         }}
       />
-  </View>
+      </View>
 
       </View>
       </ImageBackground>
