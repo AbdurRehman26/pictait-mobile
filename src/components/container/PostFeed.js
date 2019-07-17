@@ -1,14 +1,37 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import {Post} from '../presentation'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class PostFeed extends Component{
     constructor(){
         super();
-    }
-    _renderPost({item}){
         var _this = this;
-        console.log(_this.state);
+
+        this.retrieveItem('access_token').then(data=>{
+            _this.setState({
+                access_token : data
+            }) 
+        });
+
+        
+
+    }
+
+    async retrieveItem(key) {
+        try {
+          const retrievedItem =  await AsyncStorage.getItem(key);
+          const item = JSON.parse(retrievedItem);
+          return item;
+        } catch (error) {
+          console.log(error.message);
+        }
+        return
+      }
+    
+
+
+    _renderPost({item}){
         return <Post/>
     }
 

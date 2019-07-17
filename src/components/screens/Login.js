@@ -12,8 +12,8 @@ import {
   ImageBackground
 } from 'react-native';
 
-class Login extends Component{
 
+class Login extends Component{  
   constructor(props) {
     super(props);
     state = {
@@ -22,11 +22,9 @@ class Login extends Component{
     }
   }
   
-  loginUser(data){
+  async loginUser(data){
 
     var _this = this;
-
-    console.log(_this.state);
 
     var facebookUserData = _this.state.facebookUserData
 
@@ -52,10 +50,21 @@ class Login extends Component{
                 user : response.data.user,
                 token : response.data.token
               })
-              _this.props.navigation.navigate('main')
+              
+              AsyncStorage.setItem('user', JSON.stringify(response.data.user));
+              AsyncStorage.setItem('access_token', JSON.stringify(response.data.token));
+              AsyncStorage.setItem('fb_access_token', JSON.stringify(facebookUserData.credentials.token));
+              
+              _this.navigateToMainScreen()
 
             })
             .catch((err)=>console.log(err))
+  }
+
+  navigateToMainScreen(){
+    var _this = this;
+    _this.props.navigation.navigate('main')
+
   }
 
 
@@ -93,8 +102,8 @@ class Login extends Component{
           _this.setState({ user : null });
         }}
         onLoginFound={function(data){
-        
-        
+          _this.navigateToMainScreen()
+
         }}
         onLoginNotFound={function(){
           _this.setState({ user : null });
