@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import config from '../../config'
 
 var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 import {
@@ -26,7 +26,10 @@ class Login extends Component{
 
     var _this = this;
 
+    console.log(_this.state);
+
     var facebookUserData = _this.state.facebookUserData
+
 
     var  postData = JSON.stringify({
       provider_access_token : facebookUserData.credentials.token,
@@ -90,8 +93,8 @@ class Login extends Component{
           _this.setState({ user : null });
         }}
         onLoginFound={function(data){
-          _this.setState({ facebookUserData : data });
-          _this.loginUser(data);
+        
+        
         }}
         onLoginNotFound={function(){
           _this.setState({ user : null });
