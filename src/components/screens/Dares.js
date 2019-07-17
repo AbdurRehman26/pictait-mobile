@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {PostFeed} from '../container'
 
-class MainFeed extends Component{
+class Dares extends Component{
 render(){
 
     return (
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default MainFeed;
+export default Dares;
