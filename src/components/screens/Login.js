@@ -27,12 +27,13 @@ class Login extends Component{
       <View style={styles.container}>
 
         <Image
-      style={{width: '60%', height: '50%'}}
+      style={styles.loginBannerImage}
       source={require('../screens/login-graphics.png')}
 
         />
 
 
+<View style={styles.buttonViewContainer}>
 
         <FBLogin
         style={styles.buttonContainer}
@@ -54,6 +55,8 @@ class Login extends Component{
           _this.setState({ user : null });
         }}
       />
+  </View>
+
       </View>
       </ImageBackground>
 
@@ -68,22 +71,37 @@ const styles = StyleSheet.create({
     marginBottom : 150,
     marginLeft : 50,
     marginRight : 50,
-    padding: 50,
     borderRadius : 30,
-    flexDirection : 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#DCDCDC'    
+    backgroundColor: '#FCFCFC'    
   },
-  buttonContainer: {
-    padding:25,
+
+  buttonViewContainer :{
+    height : 50,
+    marginTop : 50,
+    marginBottom : 150,
+    marginLeft : 50,
+    marginRight : 50,
+    borderRadius : 30,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:250,
+    backgroundColor: '#FCFCFC'    
+  },
+
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft:20,
     marginRight:20,
+    height : 20,
     width:200,
     borderRadius:20,
+  },
+  loginBannerImage : {
+    marginTop : 150,
+    width:  '75%',
+    height: '50%'
   }
 });
  
