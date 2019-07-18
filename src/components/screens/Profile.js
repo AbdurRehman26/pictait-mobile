@@ -157,7 +157,7 @@ class Profile extends Component{
       </View>
 
       <View style={{ paddingVertical : 10, paddingHorizontal : 10}}>
-        <Text style={{ fontWeight : 'bold'}}>{user.first_name}</Text>
+        <Text style={{ fontWeight : 'bold'}}>{user.first_name} {user.last_name}</Text>
         <Text>Lark | Software Engineer | Poet</Text>
         <Text>http://facebook.com/sark26</Text>
       </View>
