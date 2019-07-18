@@ -42,8 +42,6 @@ class Post extends Component{
         const heartLikedColor = this.state.liked ? 'rgb(252,61,57)' : null
         const displayName = this.props.item.user.first_name ? this.props.item.user.first_name : '' + ' ' + this.props.item.user.last_name ? this.props.item.user.last_name : ''
         const post = this.props.item.post
-
-        console.log(this.props.item);
         
         return (
             <View style={styles.container}>
@@ -84,7 +82,7 @@ class Post extends Component{
             <TouchableOpacity
             activeOpacity={1}
             onPress={()=>{
-                this.handleDoubleTap()
+                this.props.navigation.navigate('postDescription', {item : this.props.item})
             }}
             >
             <Image 

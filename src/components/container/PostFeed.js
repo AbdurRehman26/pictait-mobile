@@ -27,7 +27,6 @@ class PostFeed extends Component{
     
     fetchFeeds(){
         var _this = this;
-        console.log(this.state.access_token);
         fetch(config.systemConfig.baseUrl+'feed?pagination=true', {
             method: 'GET',
             headers: {
@@ -70,7 +69,7 @@ class PostFeed extends Component{
     
     render(){
         const items = this.state.items;
-        console.log(items);
+        
         return (
             <FlatList
             style={styles.container}
