@@ -22,6 +22,10 @@ class Login extends Component{
     }
   }
   
+  navigateToMainScreen(){
+      console.log(this.props.navigation, this.props)
+  }
+
   async loginUser(data){
 
     var _this = this;
@@ -59,12 +63,6 @@ class Login extends Component{
 
             })
             .catch((err)=>console.log(err))
-  }
-
-  navigateToMainScreen(){
-    var _this = this;
-    _this.props.navigation.navigate('main')
-
   }
 
 

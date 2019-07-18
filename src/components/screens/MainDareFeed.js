@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {PostFeed} from '../container'
+import {DareFeed} from '../container'
 
-class Dares extends Component{
+class MainDareFeed extends Component{
 render(){
 
     return (
     <View style={styles.container}>
         <View>
-            <PostFeed/>
+            <DareFeed/>
         </View>
     </View>
   );
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Dares;
+export default MainDareFeed;
