@@ -2,9 +2,16 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {PostFeed} from '../container'
 
+
+
 class MainFeed extends Component{
 constructor (props) {
   super(props);
+}
+
+static navigationOptions = {
+  headerMode: 'none',
+  header: null
 }
 
 render(){
@@ -38,5 +45,11 @@ const styles = StyleSheet.create({
 }
 
 });
+
+MainFeed.navigationOptions = ({ /*navigation*/ }) => {
+  return {
+      header: null
+  }
+}
 
 export default MainFeed;

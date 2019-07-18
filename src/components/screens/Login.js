@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
   }
 });
  
-
 Login.navigationOptions = ({ /*navigation*/ }) => {
   return {
       header: null

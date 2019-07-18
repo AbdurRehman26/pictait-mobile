@@ -48,7 +48,6 @@ class Post extends Component{
             
             <View style={styles.userBar}>
             
-            
             <TouchableOpacity
             style={{flexDirection : 'row'}}
             activeOpacity={1}
@@ -103,10 +102,16 @@ class Post extends Component{
             </TouchableOpacity> 
             
             
+            <TouchableOpacity
+            onPress={()=>{
+                this.props.navigation.navigate('postDescription', {item : this.props.item})
+            }}
+            >
             <Image 
             style={styles.icon}
             source={config.image.chatIcon} />
-            
+            </TouchableOpacity>
+
             </View>
             
             <View style={styles.commentsBar}>
