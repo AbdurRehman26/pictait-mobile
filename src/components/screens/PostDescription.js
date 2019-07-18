@@ -129,7 +129,7 @@ class PostDescription extends Component{
       <View>
       <View style={{ flexDirection : 'row', justifyContent : 'space-around', borderTopWidth : 1, borderTopColor : '#eae5e5'}}>
 
-        <CommentsList />
+        <CommentsList items={item.post.comments} />
 
 
       </View>
