@@ -7,14 +7,14 @@ const TabNavigator = createBottomTabNavigator(
         feed : MainFeed,
         // camera: CameraComponent,
         dares: MainDareFeed,
-        profile: Profile,
-        postDescription : PostDescription 
+        profile: Profile
     }       
     );
     
     const AppNavigator = createStackNavigator({
         home : Login,
-        main : TabNavigator
+        main : TabNavigator,
+        postDescription : PostDescription
     });
     
     export default createAppContainer(AppNavigator);
