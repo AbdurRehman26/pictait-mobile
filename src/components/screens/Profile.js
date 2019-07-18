@@ -99,6 +99,9 @@ class Profile extends Component{
   
   render(){
     
+    const { navigation } = this.props;
+    const user = navigation.getParam('user');
+  
     return (
       <Container style={{ paddingTop: 10, flex : 1 , backgroundColor : 'white'}}>
       <Content>
@@ -108,7 +111,7 @@ class Profile extends Component{
       <View style={{ flex : 1, alignItems : 'center' }}>
       <Image
       style={{width : 75, height : 75, borderRadius : 37.5}}
-      source={{ uri : 'https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833' }}
+      source={{ uri : user.image }}
       />
       </View>
       
@@ -154,7 +157,7 @@ class Profile extends Component{
       </View>
 
       <View style={{ paddingVertical : 10, paddingHorizontal : 10}}>
-        <Text style={{ fontWeight : 'bold'}}>Kazmi</Text>
+        <Text style={{ fontWeight : 'bold'}}>{user.first_name}</Text>
         <Text>Lark | Software Engineer | Poet</Text>
         <Text>http://facebook.com/sark26</Text>
       </View>

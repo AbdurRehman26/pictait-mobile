@@ -30,8 +30,8 @@ class Post extends Component{
         })    
     }
 
-    navigateToProfile(){
-        this.props.navigation.navigate('profile')
+    navigateToProfile(user){
+        this.props.navigation.navigate('profile' , {user : user})
     }
     
     
@@ -53,7 +53,7 @@ class Post extends Component{
             style={{flexDirection : 'row'}}
             activeOpacity={1}
             onPress={()=>{
-                this.navigateToProfile()
+                this.navigateToProfile(this.props.item.user)
             }}
             >
             
