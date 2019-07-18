@@ -3,12 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import {PostFeed} from '../container'
 
 class MainFeed extends Component{
-render(){
+constructor (props) {
+  super(props);
+}
 
+render(){
     return (
     <View style={styles.container}>
         <View>
-            <PostFeed/>
+            <PostFeed />
         </View>
     </View>
   );

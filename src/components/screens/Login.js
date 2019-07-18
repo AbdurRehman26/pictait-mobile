@@ -23,7 +23,7 @@ class Login extends Component{
   }
   
   navigateToMainScreen(){
-      console.log(this.props.navigation, this.props)
+    this.props.navigation.navigate('main')
   }
 
   async loginUser(data){

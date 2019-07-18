@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import config from '../../config/index'
+import { withNavigation } from 'react-navigation'
 
 class Post extends Component{
     
@@ -30,7 +31,7 @@ class Post extends Component{
     }
 
     navigateToProfile(){
-        this.props.navigation.navigate('main')
+        this.props.navigation.navigate('profile')
     }
     
     
@@ -54,7 +55,7 @@ class Post extends Component{
             style={{flexDirection : 'row'}}
             activeOpacity={1}
             onPress={()=>{
-                this.props.navigation.navigate('profile')
+                this.navigateToProfile()
             }}
             >
             
@@ -174,4 +175,4 @@ class Post extends Component{
         
     });
     
-    export default Post;
+    export default withNavigation(Post);

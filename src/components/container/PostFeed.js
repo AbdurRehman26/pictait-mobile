@@ -5,10 +5,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import config from '../../config'
 
 class PostFeed extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         var _this = this;
-        
         this.state = {
             items : []
         }
@@ -61,6 +60,7 @@ class PostFeed extends Component{
     
     
     _renderPost({item}){
+        
         return <Post item={item} />
     }
     
