@@ -7,7 +7,7 @@ import config from '../../config'
 class PostFeed extends Component{
     constructor(props){
         super(props);
-        var _this = this;
+        
         this.state = {
             items : []
         }

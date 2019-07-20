@@ -4,7 +4,6 @@ import {DareFeed} from '../container'
 
 class MainDareFeed extends Component{
 render(){
-
     return (
     <View style={styles.container}>
         <View>
@@ -22,18 +21,6 @@ const styles = StyleSheet.create({
     width: 100 + '%',
     height: 100 + '%'
   },
-  navBar : {
-    width: 100 + '%',
-    height: 75,
-    marginTop : 20,
-    backgroundColor: '#dbdbdb',
-    borderBottomColor : 'white',
-    borderBottomWidth : StyleSheet.hairlineWidth,
-    justifyContent: 'center',
-    alignItems : 'center',
-
-}
-
 });
 
 export default MainDareFeed;

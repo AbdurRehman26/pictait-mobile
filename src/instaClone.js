@@ -4,9 +4,9 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 
 const TabNavigator = createBottomTabNavigator(
     {
+        dares: MainDareFeed,
         feed : MainFeed,
         // camera: CameraComponent,
-        dares: MainDareFeed,
         profile: Profile
     }       
     );

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import config from '../../config/index'
+import { withNavigation } from 'react-navigation'
 
-class Dare extends Component{
+class DarePost extends Component{
     
     lastTap = null;
     handleDoubleTap = () => {
@@ -19,7 +20,7 @@ class Dare extends Component{
         super(props);
         this.state = {
             liked : false,
-            screenWidth : Dimensions.get('window').width
+            screenWidth : (Dimensions.get('window').width / 2 ) - 1
         }
 
     }
@@ -29,32 +30,29 @@ class Dare extends Component{
         })    
     }
 
-    navigateToProfile(){
-
+    navigateToProfile(user){
+        this.props.navigation.navigate('profile' , {user : user})
     }
     
     
     render(){
         const imageHeight = this.state.screenWidth
-        const imageUri = this.props.item.post.file_path
-        const userImage = this.props.item.user.image
+        const imageUri = this.props.userImage ? this.props.userImage : ''
+        const userImage = this.props.user ? this.props.user.file_path : ''
         const heartLikedColor = this.state.liked ? 'rgb(252,61,57)' : null
-        const displayName = this.props.item.user.first_name ? this.props.item.user.first_name : '' + ' ' + this.props.item.user.last_name ? this.props.item.user.last_name : ''
+        const displayName = this.props.user.first_name ? this.props.user.first_name : '' + ' ' + this.props.user.last_name ? this.props.user.last_name : ''
         const post = this.props.item.post
-
-        console.log(this.props.item);
-        
+        console.log(this.props.user);
         return (
             <View style={styles.container}>
             
             <View style={styles.userBar}>
             
-            
             <TouchableOpacity
             style={{flexDirection : 'row'}}
             activeOpacity={1}
             onPress={()=>{
-                this.navigateToProfile()
+                this.navigateToProfile(this.props.user)
             }}
             >
             
@@ -64,34 +62,21 @@ class Dare extends Component{
             
             <View style={{justifyContent : 'flex-start'}}>
             <Text style={{fontWeight: 'bold', marginLeft : 10}}>{displayName}</Text>
-            <Text style={{marginLeft : 10}}>Added: {post.formatted_created_at}</Text>
             </View>
 
             </TouchableOpacity>
-            
-            <View>
-            <Text style={{fontSize : 38}}>...</Text>
+                    
             </View>
-            
-            </View>
-
-            <View style={{ padding : 10, marginLeft : 10, alignContent : 'space-around' , alignItems : 'flex-start'}}>
-            <Text>{post.caption}</Text>
-            </View>
-
 
             <TouchableOpacity
             activeOpacity={1}
-            onPress={()=>{
-                this.handleDoubleTap()
-            }}
             >
             <Image 
-            style={{width : imageHeight , height: imageHeight * 1.1 }}
+            style={[styles.image, {width : imageHeight, height: imageHeight * 1.1}]}
             source={{uri : imageUri}} />
             </TouchableOpacity>
             
-            <View style={styles.iconBar}>
+            <View style={[styles.iconBar , {flex : 1 , flexDirection : 'row'}]}>
             
             <TouchableOpacity
             onPress={()=>{
@@ -102,23 +87,10 @@ class Dare extends Component{
             style={[styles.icon, {tintColor : heartLikedColor}]}
             source={config.image.likeIcon} />
             </TouchableOpacity> 
-            
-            
-            <Image 
-            style={styles.icon}
-            source={config.image.chatIcon} />
-            
-            </View>
-            
-            <View style={styles.commentsBar}>
-                        
-            <Text style={[styles.icon, { width : config.styleConstants.defaultRowWidth+35 }]}>{post.likeCount} Likes</Text>
-                        
-            <Text style={[styles.icon, { width : config.styleConstants.defaultRowWidth+35 }]}>{post.commentsCount} comments</Text>
-            
-            
-            </View>
+            <Text style={[styles.icon, { width : config.styleConstants.defaultRowWidth+35 }]}>{post ? post.likeCount : 0} Likes</Text>
 
+            </View>
+            
             </View>
             );
         }
@@ -126,52 +98,52 @@ class Dare extends Component{
     
     const styles = StyleSheet.create({
         userPic : {
-            height : 50,
-            width : 50,
+            height : 35,
+            width : 35,
             borderRadius : 20,
-            marginBottom : 10,
         },  
         userBar : {
-            paddingTop : 10,
+            paddingHorizontal : 10,
+            paddingVertical : 5,
             flexDirection : 'row',
             width : 100 + '%',
-            height : 50,
+            height : 40,
             backgroundColor : '#fff',
-            paddingHorizontal : 20,
             justifyContent  : 'space-between'
         },
         
         container: {
-            flex: 1,
-            width: 100 + '%'
-        },
-        iconBar : {
-            height : config.styleConstants.defaultRowHeight+10,
-            borderColor : "rgb(233,233,233)",
             borderBottomWidth : StyleSheet.hairlineWidth,
             borderTopWidth : StyleSheet.hairlineWidth,
-            flexDirection : 'row',
-            justifyContent  : 'space-between',
-            
+            borderLeftWidth : StyleSheet.hairlineWidth,
+            borderRightWidth : StyleSheet.hairlineWidth,
+            flex: 1,
+            width: 100 + '%',
+            marginTop : 10,
+        },
+        iconBar : {
+            height : config.styleConstants.defaultRowHeight+1,
+            borderColor : "rgb(233,233,233)",
+            flexDirection : 'row'            
         },
         icon : {
-            height : config.styleConstants.defaultRowHeight-10,
-            width : config.styleConstants.defaultRowWidth-10,
-            marginRight : 10,
-            marginLeft : 10,
+            height : config.styleConstants.defaultRowHeight-20,
+            width : config.styleConstants.defaultRowWidth-20,
             marginTop : 10,
+            marginLeft : 5,
         },
         commentsBar:{
             paddingBottom : 10,
             height : config.styleConstants.defaultRowHeight + 5,
             borderColor : "rgb(233,233,233)",
-            borderBottomWidth : StyleSheet.hairlineWidth,
             flexDirection : 'row',
             justifyContent : 'space-between'
+        },
+        image : {
+            borderWidth : 10
         }
-        
         
         
     });
     
-    export default Dare;
+    export default withNavigation(DarePost);

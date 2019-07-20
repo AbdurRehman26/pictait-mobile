@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import {Dare} from '../presentation'
+import {Dares} from '../presentation'
 import AsyncStorage from '@react-native-community/async-storage';
 import config from '../../config'
 
 class DareFeed extends Component{
-    constructor(){
-        super();
-        var _this = this;
-        
+    constructor(props){
+        super(props);
+
         this.state = {
             items : []
         }
@@ -21,14 +20,14 @@ class DareFeed extends Component{
             _this.setState({
                 access_token : data
             }) 
-            _this.fetchFeeds()
+            _this.fetchData()
             
         });
     }
     
-    fetchFeeds(){
+    fetchData(){
         var _this = this;
-        console.log(this.state.access_token);
+        
         fetch(config.systemConfig.baseUrl+'dare?status=accepted&pagination=true&show_all=true', {
             method: 'GET',
             headers: {
@@ -37,7 +36,6 @@ class DareFeed extends Component{
                 Authorization : 'Bearer '+ _this.state.access_token
             }
         }).then((res) => res.json()).then((response) =>  {
-                console.log(response.response.data);
             _this.setState({
                 items : response.response.data
             })
@@ -61,7 +59,7 @@ class DareFeed extends Component{
     
     
     _renderDare({item}){
-        return <Dare item={item} />
+        return <Dares item={item} />
     }
     
     _returnKey(item){
@@ -70,7 +68,6 @@ class DareFeed extends Component{
     
     render(){
         const items = this.state.items;
-        console.log(items);
         return (
             <FlatList
             style={styles.container}

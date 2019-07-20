@@ -17,7 +17,7 @@ class CommentsList extends Component {
     
     
     _renderPost({item}){
-        console.log(item);
+        
         return (
             <View style={styles.container}>
             <TouchableOpacity onPress={() => {}}>
