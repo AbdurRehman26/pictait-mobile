@@ -60,7 +60,7 @@ class PostFeed extends Component{
     
     _renderPost({item}){
         
-        return <Post item={item} />
+        return <Post post={item.post} user={item.user} />
     }
     
     _returnKey(item){

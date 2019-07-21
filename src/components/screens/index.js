@@ -2,7 +2,7 @@ import MainFeed from './MainFeed'
 import MainDareFeed from './MainDareFeed'
 import Login from './Login'
 import PostDescription from './PostDescription'
-// import CameraComponent from './CameraComponent'
+import MainEventFeeds from './MainEventFeeds'
 import Profile from './Profile'
 
 export {
@@ -11,5 +11,5 @@ export {
     Profile,
     MainDareFeed,
     PostDescription,
-    // CameraComponent
+    MainEventFeeds
 }

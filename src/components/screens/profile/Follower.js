@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import {Post} from '../../presentation'
+import {FriendCards} from '../../common'
 import AsyncStorage from '@react-native-community/async-storage';
 import config from '../../../config'
 
@@ -21,7 +21,7 @@ class Follower extends Component{
                 access_token : data
             })             
         });
-
+        
         this.retrieveItem('user').then(data=>{
             _this.setState({
                 user : data
@@ -29,14 +29,14 @@ class Follower extends Component{
             _this.fetchData()
             
         });
-
-
+        
+        
     }
     
     fetchData(){
         var _this = this;
         const user_id = this.state.user.id
-
+        
         fetch(config.systemConfig.baseUrl+'follower?pagination=true&follow_id='+user_id, {
             method: 'GET',
             headers: {
@@ -48,9 +48,8 @@ class Follower extends Component{
             _this.setState({
                 items : response.response.data
             })
-            console.log(response.response.data);
-
-
+            
+            
         }).catch((err)=>console.log(err))
         
         
@@ -66,27 +65,12 @@ class Follower extends Component{
         }
         return
     }
-
-    _renderPost({item}){
-
-        return <Post post={item} user={item.user} />
-    }
-    
-    _returnKey(item){
-        return item._id.toString()
-    }
     
     render(){
         const items = this.state.items;
         
         return (
-            <FlatList
-            style={styles.container}
-            data={items}
-            keyExtractor={this._returnKey}
-            renderItem={this._renderPost}
-            >
-            </FlatList>
+            <FriendCards items={items} />
             )
         }
     }

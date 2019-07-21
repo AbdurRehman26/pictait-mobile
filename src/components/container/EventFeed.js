@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import {FriendCards} from '../../common'
+import {Event} from '../presentation'
 import AsyncStorage from '@react-native-community/async-storage';
-import config from '../../../config'
+import config from '../../config'
 
-class Following extends Component{
+class EventFeed extends Component{
     constructor(props){
         super(props);
         
@@ -19,25 +19,15 @@ class Following extends Component{
         this.retrieveItem('access_token').then(data=>{
             _this.setState({
                 access_token : data
-            })             
-        });
-        
-        this.retrieveItem('user').then(data=>{
-            _this.setState({
-                user : data
             }) 
             _this.fetchData()
             
         });
-        
-        
     }
     
     fetchData(){
         var _this = this;
-        const user_id = this.state.user.id
-        
-        fetch(config.systemConfig.baseUrl+'follower?pagination=true&user_id='+user_id, {
+        fetch(config.systemConfig.baseUrl+'event?pagination=true', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -45,10 +35,10 @@ class Following extends Component{
                 Authorization : 'Bearer '+ _this.state.access_token
             }
         }).then((res) => res.json()).then((response) =>  {
+            
             _this.setState({
                 items : response.response.data
             })
-            
             
         }).catch((err)=>console.log(err))
         
@@ -65,12 +55,28 @@ class Following extends Component{
         }
         return
     }
+
+    
+    _renderData({item}){
+        
+        return <Event item={item}  />
+    }
+    
+    _returnKey(item){
+        return item.id.toString()
+    }
     
     render(){
         const items = this.state.items;
         
         return (
-            <FriendCards items={items} />
+            <FlatList
+            style={styles.container}
+            data={items}
+            keyExtractor={this._returnKey}
+            renderItem={this._renderData}
+            >
+            </FlatList>
             )
         }
     }
@@ -81,4 +87,4 @@ class Following extends Component{
         }
     });
     
-    export default Following;
+    export default EventFeed;

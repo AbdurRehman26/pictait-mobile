@@ -1,14 +1,14 @@
-import {MainFeed, Login, Profile, MainDareFeed, PostDescription} from '../src/components/screens'
+import {MainFeed, Login, Profile, MainDareFeed, MainEventFeeds, PostDescription} from '../src/components/screens'
 // CameraComponent
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 const TabNavigator = createBottomTabNavigator(
     {
+        events : MainEventFeeds,
         profile: Profile,
         dares: MainDareFeed,
         feed : MainFeed,
-        // camera: CameraComponent,
-        
+       
     }       
     );
     

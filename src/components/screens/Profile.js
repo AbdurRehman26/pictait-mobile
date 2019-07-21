@@ -3,7 +3,7 @@ import { Image, Text, View, Dimensions} from 'react-native';
 import { Content, Container, Button} from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Timeline, Follower, Following } from '../screens/profile';
+import { Timeline, Follower, Following, Dare } from '../screens/profile';
 
 var width = Dimensions.get('window').width
 
@@ -78,30 +78,26 @@ class Profile extends Component{
     renderSection = () =>{
       if(this.state.activeIndex == 0){
         return (
-          <Timeline />
+          <Dare />
+          // <Timeline />
           )
         }
         
         if(this.state.activeIndex == 1){
           return (
-            <Follower />
+            <Following />
             )
           }
           
           if(this.state.activeIndex == 2){
             return (
-              <Following />
+              <Follower />
               )
             }
             
             if(this.state.activeIndex == 3){
               return (
-                <View>
-                
-                <Text>This is the Third selection</Text>
-                
-                </View>
-                
+                <Dare />
                 )
               }
               
