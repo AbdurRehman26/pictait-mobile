@@ -37,11 +37,11 @@ class Post extends Component{
     
     render(){
         const imageHeight = this.state.screenWidth
-        const imageUri = this.props.item.post.file_path
-        const userImage = this.props.item.user.image
+        const imageUri = this.props.post.file_path
+        const userImage = this.props.user.image
         const heartLikedColor = this.state.liked ? 'rgb(252,61,57)' : null
-        const displayName = this.props.item.user.first_name ? this.props.item.user.first_name : '' + ' ' + this.props.item.user.last_name ? this.props.item.user.last_name : ''
-        const post = this.props.item.post
+        const displayName = this.props.user.first_name ? this.props.user.first_name : '' + ' ' + this.props.user.last_name ? this.props.user.last_name : ''
+        const post = this.props.post
         
         return (
             <View style={styles.container}>
@@ -52,7 +52,7 @@ class Post extends Component{
             style={{flexDirection : 'row'}}
             activeOpacity={1}
             onPress={()=>{
-                this.navigateToProfile(this.props.item.user)
+                this.navigateToProfile(this.props.user)
             }}
             >
             
@@ -81,7 +81,7 @@ class Post extends Component{
             <TouchableOpacity
             activeOpacity={1}
             onPress={()=>{
-                this.props.navigation.navigate('postDescription', {item : this.props.item})
+                this.props.navigation.navigate('postDescription', {item : this.props.post})
             }}
             >
             <Image 
@@ -104,7 +104,7 @@ class Post extends Component{
             
             <TouchableOpacity
             onPress={()=>{
-                this.props.navigation.navigate('postDescription', {item : this.props.item})
+                this.props.navigation.navigate('postDescription', {item : this.props.post})
             }}
             >
             <Image 

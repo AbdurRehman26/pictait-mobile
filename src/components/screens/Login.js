@@ -20,8 +20,13 @@ class Login extends Component{
       email   : '',
       password: '',
     }
+
   }
   
+  componentDidMount(){
+    
+  }
+
   navigateToMainScreen(){
     this.props.navigation.navigate('main')
   }
