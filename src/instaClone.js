@@ -4,18 +4,18 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 
 const TabNavigator = createBottomTabNavigator(
     {
+        feed : MainFeed,
+        dares: MainDareFeed,
         events : MainEventFeeds,
         profile: Profile,
-        dares: MainDareFeed,
-        feed : MainFeed,
-       
+        
     }       
     );
     
     const AppNavigator = createStackNavigator({
         home : Login,
         main : TabNavigator,
-        postDescription : PostDescription
+        postDescription : PostDescription,
     });
     
     export default createAppContainer(AppNavigator);

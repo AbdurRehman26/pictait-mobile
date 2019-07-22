@@ -25,10 +25,58 @@ class Post extends Component{
 
     }
     likeToggled(){
+        if(this.state.liked){
+            this.deleteLike();
+        }else{
+            this.addLike();
+        }
+        
         this.setState({
             liked : !this.state.liked
         })    
     }
+
+    deleteLike(){
+
+        var _this = this;
+        fetch(config.systemConfig.baseUrl+'like/'+_this.props.post.id + '?liked=false', {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization : 'Bearer '+ _this.state.access_token
+            }
+        }).then((res) => res.json()).then((response) =>  {
+                    
+        }).catch((err)=>console.log(err))
+
+
+    }
+
+
+    addLike(){
+        var _this = this;
+        
+        var  postData = JSON.stringify({
+            post_id : _this.props.post.id
+        })
+                
+        fetch(config.systemConfig.baseUrl+'like', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization : 'Bearer '+ _this.state.access_token
+            },
+            body : postData
+        }).then((res) => res.json()).then((response) =>  {
+                    
+        }).catch((err)=>console.log(err))
+        
+        
+    }
+
+
 
     navigateToProfile(user){
         this.props.navigation.navigate('profile' , {user : user})

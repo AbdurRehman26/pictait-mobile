@@ -21,11 +21,24 @@ class Login extends Component{
       password: '',
     }
 
+    var _this = this;
+    this.retrieveItem('access_token').then(data=>{
+        _this.navigateToMainScreen();       
+    });
+
+
   }
-  
-  componentDidMount(){
-    
-  }
+
+  async retrieveItem(key) {
+    try {
+        const retrievedItem =  await AsyncStorage.getItem(key);
+        const item = JSON.parse(retrievedItem);
+        return item;
+    } catch (error) {
+        console.log(error.message);
+    }
+    return
+}
 
   navigateToMainScreen(){
     this.props.navigation.navigate('main')
