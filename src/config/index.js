@@ -7,6 +7,7 @@ export default {
     styleConstants : {
         defaultRowHeight : 50,
         defaultRowWidth : 50,
+        primaryColor : "#6c50a5"
     },
     systemConfig : {
         baseUrl : 'https://pictait.com/api/'
