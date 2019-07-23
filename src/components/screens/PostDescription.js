@@ -16,6 +16,7 @@ class PostDescription extends Component{
   }
   
   componentDidMount() {
+
     var _this = this;
     this.retrieveItem('user').then(data=>{
       _this.setState({
@@ -38,9 +39,9 @@ class PostDescription extends Component{
   }
   render(){
     
+
     const { navigation } = this.props;
     const item = navigation.getParam('item');
-    const user = this.state.user;
     
     return (
       <Container style={{ paddingTop: 10, flex : 1 , backgroundColor : 'white'}}>
@@ -55,7 +56,7 @@ class PostDescription extends Component{
       <View style={{ flexDirection : 'row', paddingTop: 10 }}>
       
       
-      <Post item={item} />
+      <Post post={item}  user={item.user} />
       
       </View>
       
@@ -66,7 +67,7 @@ class PostDescription extends Component{
       <View>
       <View style={{ flexDirection : 'row', justifyContent : 'space-around', borderTopWidth : 1, borderTopColor : '#eae5e5'}}>
       
-      <CommentsList items={item.post.comments} />
+      <CommentsList items={item.comments} />
       
         <View style={{ borderBottomWidth : 1, borderBottomColor : '#eae5e5', backgroundColor: 'white',alignItems: 'center',width:'100%'}}>
         

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import config from '../../config/index'
 import { withNavigation } from 'react-navigation'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Post extends Component{
     
@@ -22,8 +23,37 @@ class Post extends Component{
             liked : false,
             screenWidth : Dimensions.get('window').width
         }
-
+        
     }
+    
+    
+    componentDidMount() {
+        var _this = this;
+        this.retrieveItem('access_token').then(data=>{
+            _this.setState({
+                access_token : data
+            })             
+        });
+
+        this.setState({
+            liked : this.props.post.liked
+        })
+        
+    }
+    
+    async retrieveItem(key) {
+        try {
+            const retrievedItem =  await AsyncStorage.getItem(key);
+            const item = JSON.parse(retrievedItem);
+            return item;
+        } catch (error) {
+            console.log(error.message);
+        }
+        return
+    }
+    
+    
+    
     likeToggled(){
         if(this.state.liked){
             this.deleteLike();
@@ -35,11 +65,14 @@ class Post extends Component{
             liked : !this.state.liked
         })    
     }
-
+    
     deleteLike(){
 
         var _this = this;
-        fetch(config.systemConfig.baseUrl+'like/'+_this.props.post.id + '?liked=false', {
+        
+        this.props.post.likeCount -=1;
+        
+        fetch(config.systemConfig.baseUrl+'like/'+_this.props.post._id + '?liked=false', {
             method: 'DELETE',
             headers: {
                 Accept: 'application/json',
@@ -47,20 +80,25 @@ class Post extends Component{
                 Authorization : 'Bearer '+ _this.state.access_token
             }
         }).then((res) => res.json()).then((response) =>  {
-                    
+            _this.props.post = response.response.data;
         }).catch((err)=>console.log(err))
-
-
+        
+        
     }
-
-
+    
+    
     addLike(){
+        
+        
         var _this = this;
         
         var  postData = JSON.stringify({
-            post_id : _this.props.post.id
+            post_id : _this.props.post._id
         })
-                
+        
+        this.props.post.likeCount +=1;
+        
+        
         fetch(config.systemConfig.baseUrl+'like', {
             method: 'POST',
             headers: {
@@ -70,26 +108,29 @@ class Post extends Component{
             },
             body : postData
         }).then((res) => res.json()).then((response) =>  {
-                    
+            
+            _this.props.post = response.response.data;
+            
         }).catch((err)=>console.log(err))
         
         
     }
-
-
-
+    
+    
+    
     navigateToProfile(user){
         this.props.navigation.navigate('profile' , {user : user})
     }
     
     
     render(){
+
+        const post = this.props.post
         const imageHeight = this.state.screenWidth
-        const imageUri = this.props.post.file_path
+        const imageUri = post.file_path
         const userImage = this.props.user.image
         const heartLikedColor = this.state.liked ? 'rgb(252,61,57)' : null
         const displayName = this.props.user.first_name ? this.props.user.first_name : '' + ' ' + this.props.user.last_name ? this.props.user.last_name : ''
-        const post = this.props.post
         
         return (
             <View style={styles.container}>
@@ -112,7 +153,7 @@ class Post extends Component{
             <Text style={{fontWeight: 'bold', marginLeft : 10}}>{displayName}</Text>
             <Text style={{marginLeft : 10}}>Added: {post.formatted_created_at}</Text>
             </View>
-
+            
             </TouchableOpacity>
             
             <View>
@@ -120,16 +161,16 @@ class Post extends Component{
             </View>
             
             </View>
-
+            
             <View style={{ padding : 10, marginLeft : 10, alignContent : 'space-around' , alignItems : 'flex-start'}}>
             <Text>{post.caption}</Text>
             </View>
-
-
+            
+            
             <TouchableOpacity
             activeOpacity={1}
             onPress={()=>{
-                this.props.navigation.navigate('postDescription', {item : this.props.post})
+                this.props.navigation.navigate('postDescription', {item : post})
             }}
             >
             <Image 
@@ -152,25 +193,25 @@ class Post extends Component{
             
             <TouchableOpacity
             onPress={()=>{
-                this.props.navigation.navigate('postDescription', {item : this.props.post})
+                this.props.navigation.navigate('postDescription', {item : post})
             }}
             >
             <Image 
             style={styles.icon}
             source={config.image.chatIcon} />
             </TouchableOpacity>
-
+            
             </View>
             
             <View style={styles.commentsBar}>
-                        
+            
             <Text style={[styles.icon, { width : config.styleConstants.defaultRowWidth+35 }]}>{post.likeCount} Likes</Text>
-                        
+            
             <Text style={[styles.icon, { width : config.styleConstants.defaultRowWidth+35 }]}>{post.commentsCount} comments</Text>
             
             
             </View>
-
+            
             </View>
             );
         }
