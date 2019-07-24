@@ -23,12 +23,72 @@ class DarePost extends Component{
             screenWidth : (Dimensions.get('window').width / 2 ) - 1
         }
 
+        if(this.props.liked){
+            this.setState({
+                liked : true
+            })                
+        }
+
+
     }
     likeToggled(){
         this.setState({
             liked : !this.state.liked
         })    
     }
+
+
+    deleteLike(){
+
+        var _this = this;
+        
+        this.props.post.likeCount -=1;
+        
+        fetch(config.systemConfig.baseUrl+'like/'+_this.props.post._id + '?liked=false', {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization : 'Bearer '+ _this.state.access_token
+            }
+        }).then((res) => res.json()).then((response) =>  {
+            _this.props.post = response.response.data;
+        }).catch((err)=>console.log(err))
+        
+        
+    }
+    
+    
+    addLike(){
+        
+        
+        var _this = this;
+        
+        var  postData = JSON.stringify({
+            post_id : _this.props.post._id
+        })
+        
+        this.props.post.likeCount +=1;
+        
+        
+        fetch(config.systemConfig.baseUrl+'like', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization : 'Bearer '+ _this.state.access_token
+            },
+            body : postData
+        }).then((res) => res.json()).then((response) =>  {
+            
+            _this.props.post = response.response.data;
+            
+        }).catch((err)=>console.log(err))
+        
+        
+    }
+    
+
 
     navigateToProfile(user){
         this.props.navigation.navigate('profile' , {user : user})
@@ -39,10 +99,13 @@ class DarePost extends Component{
         const imageHeight = this.state.screenWidth
         const imageUri = this.props.userImage ? this.props.userImage : ''
         const userImage = this.props.user ? this.props.user.file_path : ''
-        const heartLikedColor = this.state.liked ? 'rgb(252,61,57)' : null
+        const heartLikedColor = this.props.liked ? 'rgb(252,61,57)' : null
         const displayName = this.props.user.first_name ? this.props.user.first_name : '' + ' ' + this.props.user.last_name ? this.props.user.last_name : ''
+        const likeCount = this.props.likeCount
+        
         const post = this.props.item.post
-        console.log(this.props.user);
+        console.log('dare', this.props);
+
         return (
             <View style={styles.container}>
             
@@ -87,7 +150,7 @@ class DarePost extends Component{
             style={[styles.icon, {tintColor : heartLikedColor}]}
             source={config.image.likeIcon} />
             </TouchableOpacity> 
-            <Text style={[styles.icon, { width : config.styleConstants.defaultRowWidth+35 }]}>{post ? post.likeCount : 0} Likes</Text>
+            <Text style={[styles.icon, { width : config.styleConstants.defaultRowWidth+35 }]}>{likeCount ? likeCount : 0} Likes</Text>
 
             </View>
             

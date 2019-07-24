@@ -9,11 +9,6 @@ class MainFeed extends Component{
     super(props);
   }
 
-  navigateToCamera(){
-    this.props.navigation.navigate('camera')
-      
-  }
-  
   render(){
     return (
       <View style={styles.container}>
@@ -24,7 +19,8 @@ class MainFeed extends Component{
       >
       <Button 
       onPress={()=>{
-        this.navigateToCamera()
+        this.props.navigation.navigate('camera')
+
       }} 
       title='Add'
       color={config.styleConstants.primaryColor}

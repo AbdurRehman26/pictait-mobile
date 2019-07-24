@@ -18,8 +18,25 @@ class Dare extends Component{
         return (
             <View style={{ flex : 1 , flexDirection : 'row'}}>
                 
-            <DarePost userImage={item.userImage} user={item.user} item={item} />
-            <DarePost userImage={item.challengerImage} user={item.challenger} item={item} />
+            <DarePost 
+            likeCount={item.userLikesCount}
+            type="user"
+            userImage={item.userImage}
+            user={item.user}
+            item={item}
+            liked={item.userLikedByMe}
+            
+            />
+            
+            <DarePost
+            likeCount={item.challengerLikesCount}
+            type="challenger"
+            userImage={item.challengerImage}
+            user={item.challenger}
+            item={item}
+            liked={item.challengerLikedByMe}
+             
+            />
             
             </View>
             );
