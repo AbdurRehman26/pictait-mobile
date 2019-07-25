@@ -12,13 +12,14 @@ class Dare extends Component{
     
     
     render(){
-
+        
         const item = this.props.item
         
         return (
             <View style={{ flex : 1 , flexDirection : 'row'}}>
-                
+            
             <DarePost 
+            itemId={item._id}
             likeCount={item.userLikesCount}
             type="user"
             userImage={item.userImage}
@@ -29,13 +30,14 @@ class Dare extends Component{
             />
             
             <DarePost
+            itemId={item._id}
             likeCount={item.challengerLikesCount}
             type="challenger"
             userImage={item.challengerImage}
             user={item.challenger}
             item={item}
             liked={item.challengerLikedByMe}
-             
+            
             />
             
             </View>
