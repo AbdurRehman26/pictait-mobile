@@ -4,6 +4,7 @@ import {
     MainEventFeeds,
     MainDareFeed,
     MainFeed,
+    EventMain,
     Profile,
     Login,
 } from '../src/components/screens'
@@ -12,9 +13,9 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 
 const TabNavigator = createBottomTabNavigator(
     {
-        dares: MainDareFeed,
-        feed : MainFeed,
         events : MainEventFeeds,
+        feed : MainFeed,
+        dares: MainDareFeed,
         profile: Profile,
         
     }       
@@ -24,7 +25,8 @@ const TabNavigator = createBottomTabNavigator(
         home : Login,
         main : TabNavigator,
         postDescription : PostDescription,
-        camera : CameraComponent
+        camera : CameraComponent,
+        eventMain : EventMain
     });
     
     export default createAppContainer(AppNavigator);

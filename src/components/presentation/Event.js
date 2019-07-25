@@ -5,36 +5,14 @@ import { withNavigation } from 'react-navigation'
 
 class Event extends Component{
     
-    lastTap = null;
-    handleDoubleTap = () => {
-        const now = Date.now();
-        const DOUBLE_PRESS_DELAY = 300;
-        if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
-            this.likeToggled();
-        } else {
-            this.lastTap = now;
-        }
-    }
-    
     constructor(props){
         super(props);
         this.state = {
-            liked : false,
             screenWidth : Dimensions.get('window').width / 4
         }
         
     }
-    likeToggled(){
-        this.setState({
-            liked : !this.state.liked
-        })    
-    }
-    
-    navigateToProfile(user){
-        this.props.navigation.navigate('profile' , {user : user})
-    }
-    
-    
+        
     render(){
         
         const imageHeight = this.state.screenWidth
@@ -50,7 +28,7 @@ class Event extends Component{
             style={{flexDirection : 'row'}}
             activeOpacity={1}
             onPress={()=>{
-                this.navigateToProfile(this.props.user)
+                this.props.navigation.navigate('eventMain' , {item : this.props.item})
             }}
             >
             
@@ -68,7 +46,7 @@ class Event extends Component{
             <TouchableOpacity
             activeOpacity={1}
             onPress={()=>{
-                this.props.navigation.navigate('postDescription', {item : item})
+                this.props.navigation.navigate('eventMain' , {item : this.props.item})
             }}
             >
             <Image 
