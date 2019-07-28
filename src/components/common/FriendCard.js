@@ -15,7 +15,7 @@ class FriendCard extends Component {
     }  
         render() {
             const item = this.props.item;
-            
+            console.log(item , 12312312);
             return (
                 
                 <View style={styles.container}>
