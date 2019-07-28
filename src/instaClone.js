@@ -9,10 +9,13 @@ import {
     Login,
 } from '../src/components/screens'
 
+import {Slider} from '../src/components/common'
+
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 const TabNavigator = createBottomTabNavigator(
     {
+        imageSlider : Slider,
         events : MainEventFeeds,
         feed : MainFeed,
         dares: MainDareFeed,
