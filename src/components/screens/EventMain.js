@@ -106,7 +106,7 @@ class EventMain extends Component{
           return (
             
             <View style={styles.container}>
-            <Container style={{backgroundColor : 'white'}}>
+            <Container style={{backgroundColor : 'white' , marginTop : 20}}>
             <Content>
             
             <View style={styles.userBar}>
@@ -135,7 +135,7 @@ class EventMain extends Component{
             source={{uri : imageUri}} />
             </TouchableOpacity>
             
-            <Text>{eventData.description}</Text>
+            <Text style={{ padding : 10}} >{eventData.description}</Text>
             </View>
             
             
