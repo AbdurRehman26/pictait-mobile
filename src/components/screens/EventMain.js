@@ -4,6 +4,8 @@ import { Content, Container, Button} from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Timeline, Follower } from '../screens/event';
+import {Slider} from '../common'
+
 import config from '../../config/index'
 
 var width = Dimensions.get('window').width
@@ -80,7 +82,7 @@ class EventMain extends Component{
     renderSection = (eventData) =>{
       if(this.state.activeIndex == 0){
         return (
-          <Timeline eventData={eventData} />
+          <Slider eventData={eventData} />
           )
         }
         
