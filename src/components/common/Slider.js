@@ -5,6 +5,7 @@ import {
     View,
     Image,
     TouchableHighlight,
+    TouchableOpacity,
     Dimensions
 } from 'react-native';
 
@@ -16,20 +17,69 @@ class Slider extends Component{
         
         this.state = {
             screenWidth : Dimensions.get('window').width,
-          }
-              
+        }
+        
     }
+
+    lastTap = null;
+    handleDoubleTap = () => {
+        const now = Date.now();
+        const DOUBLE_PRESS_DELAY = 300;
+        if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
+            this.likeOrUnlike();
+        } else {
+            this.lastTap = now;
+        }
+    }
+    
+
+
+    likeOrUnlike(){
+
+        var _this = this;
+        
+        var  postData = JSON.stringify({
+            id : _this.props.itemId,
+            type : _this.props.type,
+            user_like_id : _this.props.user.id,
+            liked : _this.state.liked
+        })
+        
+        if(!this.state.liked){
+            this.state.likeCount +=1
+        }else{
+            this.state.likeCount -=1
+        }
+
+        fetch(config.systemConfig.baseUrl+'dare/like/'+this.props.itemId, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization : 'Bearer '+ _this.state.access_token
+            },
+            body : postData
+        }).then((res) => res.json()).then((response) =>  {
+            
+            console.log(response.response);
+            // _this.props.post = response.response.data;
+            
+        }).catch((err)=>console.log(err))
+        
+    }
+
     
     
     render() {
+        var _this = this
         const items = this.props.items
         const images = []
-
-
+        
+        
         items.forEach(element => {
             images.push(element.entry.upload_url)
         });
-
+        
         return (
             <View>
             <ImageSlider
@@ -44,7 +94,20 @@ class Slider extends Component{
                     styles.customSlide
                 ]}
                 >
+                
+                
+                <TouchableOpacity
+                style={{flexDirection : 'row'}}
+                activeOpacity={1}
+                onPress={()=>{
+                    _this.handleDoubleTap()
+                }}
+                >
+                
                 <Image source={{ uri: item }} style={[{width : this.state.screenWidth, height : this.state.screenWidth}]} />
+                
+                </TouchableOpacity>
+                
                 </View>
                 )}
                 customButtons={(position, move) => (
