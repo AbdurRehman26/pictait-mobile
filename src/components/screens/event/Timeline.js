@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import {Post} from '../../presentation'
 import AsyncStorage from '@react-native-community/async-storage';
 import config from '../../../config'
+import {Slider} from '../../common'
 
 class Timeline extends Component{
     constructor(props){
@@ -22,9 +22,9 @@ class Timeline extends Component{
             })             
         });
 
-        this.retrieveItem('user').then(data=>{
+        this.retrieveItem('eventData').then(data=>{
             _this.setState({
-                user : data
+                eventData : data
             }) 
             _this.fetchPosts()
             
@@ -34,10 +34,11 @@ class Timeline extends Component{
     }
     
     fetchPosts(){
-        var _this = this;
-        const user_id = this.state.user.id
 
-        fetch(config.systemConfig.baseUrl+'post?pagination=true&user_id='+user_id, {
+        var _this = this;
+        const event_id = this.state.eventData.id
+        
+        fetch(config.systemConfig.baseUrl+'event-entry?status=1&pagination=true&event_id='+event_id, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -65,25 +66,10 @@ class Timeline extends Component{
         return
     }
 
-    _renderPost({item}){
-        return <Post post={item} user={item.user} />
-    }
-    
-    _returnKey(item){
-        return item._id.toString()
-    }
-    
     render(){
         const items = this.state.items;
-        
         return (
-            <FlatList
-            style={styles.container}
-            data={items}
-            keyExtractor={this._returnKey}
-            renderItem={this._renderPost}
-            >
-            </FlatList>
+            <Slider items={items} />
             )
         }
     }

@@ -1,45 +1,50 @@
 import React, { Component } from 'react';
 import {
-    Platform,
     StyleSheet,
     Text,
     View,
     Image,
     TouchableHighlight,
+    Dimensions
 } from 'react-native';
 
 import ImageSlider from 'react-native-image-slider';
 
 class Slider extends Component{
-    render() {
-        const images = [
-            'https://placeimg.com/640/640/nature',
-            'https://placeimg.com/640/640/people',
-            'https://placeimg.com/640/640/animals',
-            'https://placeimg.com/640/640/beer',
-        ];
+    constructor(props){
+        super(props)
         
+        this.state = {
+            screenWidth : Dimensions.get('window').width,
+          }
+              
+    }
+    
+    
+    render() {
+        const items = this.props.items
+        const images = []
+
+
+        items.forEach(element => {
+            images.push(element.entry.upload_url)
+        });
+
         return (
-            <View style={styles.container}>
-            <View style={styles.content1}>
-            <Text style={styles.contentText}>Content 1</Text>
-            </View>
+            <View>
             <ImageSlider
             loop
-            autoPlayWithInterval={3000}
             images={images}
             onPress={({ index }) => alert(index)}
             customSlide={({ index, item, style, width }) => (
-                // It's important to put style here because it's got offset inside
                 <View
                 key={index}
                 style={[
                     style,
-                    styles.customSlide,
-                    { backgroundColor: index % 2 === 0 ? 'yellow' : 'green' },
+                    styles.customSlide
                 ]}
                 >
-                <Image source={{ uri: item }} style={styles.customImage} />
+                <Image source={{ uri: item }} style={[{width : this.state.screenWidth, height : this.state.screenWidth}]} />
                 </View>
                 )}
                 customButtons={(position, move) => (
@@ -61,37 +66,13 @@ class Slider extends Component{
                         </View>
                         )}
                         />
-                        <View style={styles.content2}>
-                        <Text style={styles.contentText}>Content 2</Text>
-                        </View>
                         </View>
                         );
                     }
                 }
                 
                 const styles = StyleSheet.create({
-                    container: {
-                        flex: 1,
-                        backgroundColor: '#F5FCFF',
-                    },
-                    slider: { backgroundColor: '#000', height: 350 },
-                    content1: {
-                        width: '100%',
-                        height: 50,
-                        marginBottom: 10,
-                        backgroundColor: '#000',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    },
-                    content2: {
-                        width: '100%',
-                        height: 100,
-                        marginTop: 10,
-                        backgroundColor: '#000',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    },
-                    contentText: { color: '#fff' },
+                    slider: { backgroundColor: '#000', height: 500 },
                     buttons: {
                         zIndex: 1,
                         height: 15,
@@ -117,10 +98,6 @@ class Slider extends Component{
                         backgroundColor: 'green',
                         alignItems: 'center',
                         justifyContent: 'center',
-                    },
-                    customImage: {
-                        width: 100,
-                        height: 100,
                     },
                 });
                 export default Slider;
