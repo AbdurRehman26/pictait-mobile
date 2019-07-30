@@ -8,8 +8,9 @@ import {
     TouchableOpacity,
     Dimensions
 } from 'react-native';
-
+import config from '../../config'
 import ImageSlider from 'react-native-image-slider';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Slider extends Component{
     constructor(props){
@@ -17,16 +18,27 @@ class Slider extends Component{
         
         this.state = {
             screenWidth : Dimensions.get('window').width,
+            items : []
         }
-        
+    }
+
+    componentDidMount(){
+        var _this = this;
+        this.retrieveItem('access_token').then(data=>{
+            _this.setState({
+                access_token : data
+            })             
+        });
+
+
     }
 
     lastTap = null;
-    handleDoubleTap = () => {
+    handleDoubleTap = (item) => {
         const now = Date.now();
         const DOUBLE_PRESS_DELAY = 300;
         if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
-            this.likeOrUnlike();
+            this.likeOrUnlike(item);
         } else {
             this.lastTap = now;
         }
@@ -34,24 +46,17 @@ class Slider extends Component{
     
 
 
-    likeOrUnlike(){
+    likeOrUnlike(item){
 
         var _this = this;
+
         
         var  postData = JSON.stringify({
-            id : _this.props.itemId,
-            type : _this.props.type,
-            user_like_id : _this.props.user.id,
-            liked : _this.state.liked
+            event_id : _this.props.eventData.id,
+            liked : false
         })
         
-        if(!this.state.liked){
-            this.state.likeCount +=1
-        }else{
-            this.state.likeCount -=1
-        }
-
-        fetch(config.systemConfig.baseUrl+'dare/like/'+this.props.itemId, {
+        fetch(config.systemConfig.baseUrl+'event-entry/update-like/'+item._id, {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',
@@ -68,14 +73,25 @@ class Slider extends Component{
         
     }
 
-    
+    async retrieveItem(key) {
+        try {
+            const retrievedItem =  await AsyncStorage.getItem(key);
+            const item = JSON.parse(retrievedItem);
+            return item;
+        } catch (error) {
+            console.log(error.message);
+        }
+        return
+    }
+
     
     render() {
         var _this = this
-        const items = this.props.items
+ 
         const images = []
         
-        
+        const items = this.props.items
+
         items.forEach(element => {
             images.push(element.entry.upload_url)
         });
@@ -100,7 +116,7 @@ class Slider extends Component{
                 style={{flexDirection : 'row'}}
                 activeOpacity={1}
                 onPress={()=>{
-                    _this.handleDoubleTap()
+                    _this.handleDoubleTap(_this.props.items[index])
                 }}
                 >
                 

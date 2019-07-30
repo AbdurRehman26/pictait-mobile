@@ -69,7 +69,7 @@ class Timeline extends Component{
     render(){
         const items = this.state.items;
         return (
-            <Slider items={items} />
+            <Slider items={items} eventData={this.state.eventData} />
             )
         }
     }
