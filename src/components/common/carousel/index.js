@@ -168,14 +168,7 @@ export default class Slider extends Component {
 
     render () {
         const example1 = this.mainExample(1, 'Default layout | Loop | Autoplay | Parallax | Scale | Opacity | Pagination with tappable dots');
-        const example2 = this.momentumExample(2, 'Momentum | Left-aligned | Active animation');
-        const example3 = this.layoutExample(3, '"Stack of cards" layout | Loop', 'stack');
-        const example4 = this.layoutExample(4, '"Tinder-like" layout | Loop', 'tinder');
-        const example5 = this.customExample(5, 'Custom animation 1', 1, this._renderItem);
-        const example6 = this.customExample(6, 'Custom animation 2', 2, this._renderLightItem);
-        const example7 = this.customExample(7, 'Custom animation 3', 3, this._renderDarkItem);
-        const example8 = this.customExample(8, 'Custom animation 4', 4, this._renderLightItem);
-
+        
         return (
             <SafeAreaView style={styles.safeArea}>
                 <View style={styles.container}>
@@ -191,13 +184,6 @@ export default class Slider extends Component {
                       directionalLockEnabled={true}
                     >
                         { example1 }
-                        { example2 }
-                        { example3 }
-                        { example4 }
-                        { example5 }
-                        { example6 }
-                        { example7 }
-                        { example8 }
                     </ScrollView>
                 </View>
             </SafeAreaView>
