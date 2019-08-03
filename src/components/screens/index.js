@@ -6,7 +6,7 @@ import MainEventFeeds from './MainEventFeeds'
 import Profile from './Profile'
 import CameraComponent from './CameraComponent'
 import EventMain from './EventMain'
-
+import Test from './Test'
 export {
     MainFeed,
     Login,
@@ -15,5 +15,6 @@ export {
     PostDescription,
     MainEventFeeds,
     CameraComponent,
-    EventMain
+    EventMain,
+    Test
 }

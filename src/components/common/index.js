@@ -1,6 +1,6 @@
 import FriendCard from './FriendCard'
 import FriendCards from './FriendCards'
-import Slider from './Slider'
+import Slider from './carousel'
 
 export {
     FriendCards,

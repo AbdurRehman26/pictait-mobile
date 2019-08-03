@@ -6,7 +6,7 @@ import {
     MainFeed,
     EventMain,
     Profile,
-    Login,
+    Login
 } from '../src/components/screens'
 
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
