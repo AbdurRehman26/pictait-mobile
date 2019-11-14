@@ -4,20 +4,20 @@ import {
     MainEventFeeds,
     MainDareFeed,
     MainFeed,
+    CreatePost,
     EventMain,
     Profile,
-    Login
+    Login,
 } from '../src/components/screens'
 
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 const TabNavigator = createBottomTabNavigator(
     {
-        events : MainEventFeeds,
         feed : MainFeed,
         dares: MainDareFeed,
-        profile: Profile,
-        
+        events : MainEventFeeds,
+        profile: Profile,        
     }       
     );
     
@@ -26,7 +26,8 @@ const TabNavigator = createBottomTabNavigator(
         main : TabNavigator,
         postDescription : PostDescription,
         camera : CameraComponent,
-        eventMain : EventMain
+        eventMain : EventMain,
+        createPost : CreatePost
     });
     
     export default createAppContainer(AppNavigator);

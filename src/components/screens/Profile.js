@@ -3,16 +3,11 @@ import { Image, Text, View, Dimensions } from "react-native";
 import { Content, Container, Button } from "native-base";
 import AsyncStorage from "@react-native-community/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome";
-import {
-  Timeline,
-  Follower,
-  Following,
-  Dare,
-} from "../screens/profile";
+import { Timeline, Follower, Following, Dare } from "../screens/profile";
 
-import {
-  EventFeed
-} from "../container";
+import { EventFeed } from "../container";
+
+import { withNavigation } from "react-navigation";
 
 var width = Dimensions.get("window").width;
 
@@ -69,7 +64,7 @@ class Profile extends Component {
     }
 
     if (this.state.activeIndex == 4) {
-      return <EventFeed />;
+      return <EventFeed user={this.state.user} />;
     }
   };
 
@@ -131,7 +126,6 @@ class Profile extends Component {
                   >
                     <Text>Edit Profile</Text>
                   </Button>
-
                 </View>
               </View>
             </View>
@@ -140,8 +134,6 @@ class Profile extends Component {
               <Text style={{ fontWeight: "bold" }}>
                 {user ? user.first_name : ""} {user ? user.last_name : ""}
               </Text>
-              <Text>Lark | Software Engineer | Poet</Text>
-              <Text>http://facebook.com/sark26</Text>
             </View>
 
             <View>
@@ -228,4 +220,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default withNavigation(Profile);

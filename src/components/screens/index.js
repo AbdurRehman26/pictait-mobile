@@ -6,6 +6,7 @@ import MainEventFeeds from './MainEventFeeds'
 import Profile from './Profile'
 import CameraComponent from './CameraComponent'
 import EventMain from './EventMain'
+import CreatePost from './CreatePost'
 import Test from './Test'
 export {
     MainFeed,
@@ -16,5 +17,6 @@ export {
     MainEventFeeds,
     CameraComponent,
     EventMain,
-    Test
+    Test,
+    CreatePost,
 }

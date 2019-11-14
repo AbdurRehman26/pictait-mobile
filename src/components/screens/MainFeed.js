@@ -1,57 +1,71 @@
-import React, {Component} from 'react';
-import { StyleSheet, TouchableOpacity, Button, View } from 'react-native';
-import {PostFeed} from '../container'
-import config from '../../config'
-import { withNavigation } from 'react-navigation'
+import React, { Component } from "react";
+import { StyleSheet, TouchableOpacity, Button, View } from "react-native";
+import { PostFeed } from "../container";
+import config from "../../config";
+import { withNavigation } from "react-navigation";
+import ImagePicker from "react-native-image-picker";
 
-class MainFeed extends Component{
-  constructor (props) {
+class MainFeed extends Component {
+  constructor(props) {
     super(props);
   }
 
-  render(){
+  state = {
+    photo: null
+  };
+
+  handleChoosePhoto = () => {
+    const options = {
+      noData: true
+    };
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.uri) {
+        console.log(response.uri);
+        this.setState({ photo: response });
+        this.props.navigation.navigate("createPost");
+      }
+    });
+  };
+
+  render() {
     return (
       <View style={styles.container}>
-      
-      <TouchableOpacity
-      style={{margin : 20}}
-      activeOpacity={1}
-      >
-      <Button 
-      onPress={()=>{
-        this.props.navigation.navigate('camera')
+        <TouchableOpacity style={{ margin: 20 }} activeOpacity={1}>
+          <Button
+            onPress={() => {
+              this.handleChoosePhoto();
+            }}
+            title="Add 2"
+            color={config.styleConstants.primaryColor}
+            style={[styles.addButton, { color: "red" }]}
+          />
+        </TouchableOpacity>
 
-      }} 
-      title='Add'
-      color={config.styleConstants.primaryColor}
-      style={[styles.addButton , {color : 'red'}]} 
-      />
-      </TouchableOpacity>
-      
-      
-      <View>
-      <PostFeed />
+        <View>
+          <PostFeed />
+        </View>
       </View>
-      </View>
-      );
-    }
+    );
   }
-  
-  const styles = StyleSheet.create({
-    
-    container: {
-      flex: 1,
-      width: 100 + '%',
-      height: 100 + '%'
-    },
-    addButton : {
-    }
-  });
-  
-  MainFeed.navigationOptions = ({ /*navigation*/ }) => {
-    return {
-      header: null
-    }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: 100 + "%",
+    height: 100 + "%"
+  },
+  addButton: {}
+});
+
+MainFeed.navigationOptions = (
+  {
+    /*navigation*/
   }
-  
-  export default withNavigation(MainFeed);
+) => {
+  return {
+    header: null
+  };
+};
+
+export default withNavigation(MainFeed);
