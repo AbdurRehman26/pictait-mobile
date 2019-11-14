@@ -18,13 +18,13 @@ class MainFeed extends Component {
     const options = {
       noData: true
     };
+
     ImagePicker.launchImageLibrary(options, response => {
       if (response.uri) {
-        console.log(response.uri);
-        this.setState({ photo: response });
-        this.props.navigation.navigate("createPost");
+        this.props.navigation.navigate("createPost", { photo: response });
       }
     });
+  
   };
 
   render() {
