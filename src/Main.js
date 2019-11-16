@@ -15,6 +15,7 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 
 const TabNavigator = createBottomTabNavigator(
     {
+        userInfo : UserInfo,
         profile: Profile,        
         feed : MainFeed,
         dares: MainDareFeed,
