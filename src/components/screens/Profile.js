@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Text, View, Dimensions } from "react-native";
+import { Image, Text, View, Dimensions, TouchableOpacity } from "react-native";
 import { Content, Container, Button } from "native-base";
 import AsyncStorage from "@react-native-community/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -113,19 +113,24 @@ class Profile extends Component {
                   </View>
                 </View>
 
-                <View style={{ flexDirection: "row", paddingTop: 10 }}>
-                  <Button
-                    bordered
-                    dark
-                    style={{
-                      flex: 3,
-                      marginLeft: 10,
-                      justifyContent: "center",
-                      height: 30
-                    }}
-                  >
-                    <Text>Edit Profile</Text>
-                  </Button>
+                <View>
+                  <TouchableOpacity activeOpacity={1}>
+                    <Button
+                      onPress={() => {
+                        this.props.navigation.navigate("userInfo");
+                      }}
+                      bordered
+                      dark
+                      style={{
+                        flex: 3,
+                        marginLeft: 10,
+                        justifyContent: "center",
+                        height: 30
+                      }}
+                    >
+                      <Text>Edit Profile</Text>
+                    </Button>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

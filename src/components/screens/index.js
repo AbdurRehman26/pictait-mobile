@@ -8,6 +8,7 @@ import CameraComponent from './CameraComponent'
 import EventMain from './EventMain'
 import CreatePost from './CreatePost'
 import Test from './Test'
+import UserInfo from './UserInfo'
 export {
     MainFeed,
     Login,
@@ -19,4 +20,5 @@ export {
     EventMain,
     Test,
     CreatePost,
+    UserInfo,
 }

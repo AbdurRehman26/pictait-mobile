@@ -6,6 +6,7 @@ import {
     MainFeed,
     CreatePost,
     EventMain,
+    UserInfo,
     Profile,
     Login,
 } from '../src/components/screens'
@@ -14,10 +15,10 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 
 const TabNavigator = createBottomTabNavigator(
     {
+        profile: Profile,        
         feed : MainFeed,
         dares: MainDareFeed,
         events : MainEventFeeds,
-        profile: Profile,        
     }       
     );
     
@@ -27,7 +28,8 @@ const TabNavigator = createBottomTabNavigator(
         postDescription : PostDescription,
         camera : CameraComponent,
         eventMain : EventMain,
-        createPost : CreatePost
+        createPost : CreatePost,
+        userInfo : UserInfo
     });
     
     export default createAppContainer(AppNavigator);
