@@ -118,6 +118,11 @@ class UserInfo extends Component {
             .catch(err => console.log(err));
     }
 
+    updateData() {
+        console.log(1111);
+    }
+
+
     async retrieveItem(key) {
         try {
             const retrievedItem = await AsyncStorage.getItem(key);
@@ -188,7 +193,7 @@ class UserInfo extends Component {
 
                         {show && (
                             <DateTimePicker
-                                value={date}
+                                value={userDetails.date_of_birth}
                                 is24Hour={true}
                                 display="default"
                                 onChange={this.setDate}
@@ -220,9 +225,12 @@ class UserInfo extends Component {
                             onBlur={this.handleBlur}
                             style={styles.textInput}
                         />
-
-
                     </View>
+
+                    <Button
+                        title="Update"
+                        onPress={() => this.updateData()}
+                    />
                 </View>
             </View>
         );
@@ -254,6 +262,7 @@ const styles = StyleSheet.create({
         fontWeight: "600"
     },
     body: {
+        flexDirection: 'column',
         marginTop: 40
     },
     bodyContent: {
