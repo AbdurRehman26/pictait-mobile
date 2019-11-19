@@ -21,7 +21,8 @@ class CreatePost extends Component {
     super(props);
 
     this.state = {
-      screenWidth: Dimensions.get("window").width
+      screenWidth: Dimensions.get("window").width,
+      text: ''
     };
   }
 
@@ -57,8 +58,8 @@ class CreatePost extends Component {
   }
 
   postData(item) {
-
     const data = new FormData();
+    const _this = this;
 
     data.append("image", {
       file: item,
@@ -68,14 +69,12 @@ class CreatePost extends Component {
       name: item.fileName
     });
 
-    data.append("caption", "Test");
-
-    console.log(data);
+    data.append("caption", this.state.text);
 
     var headers = config.headers;
     headers.Authorization = "Bearer " + this.state.token;
-    headers['Content-Length'] = 348792;
-    headers["Content-Type"] = `multipart/form-data;`
+    headers["Content-Length"] = 348792;
+    headers["Content-Type"] = `multipart/form-data;`;
 
     console.log(data, headers);
 
@@ -86,7 +85,10 @@ class CreatePost extends Component {
     })
       .then(res => res.json())
       .then(response => {
-        console.log(response, 33333);
+
+                _this.props.navigation.navigate("feed");
+
+
       })
       .catch(error => {
         console.log(error, 3333313);
@@ -108,7 +110,14 @@ class CreatePost extends Component {
           <View style={{ flexDirection: "row" }}>
             <Image style={styles.userPic} source={{ uri: userImage }} />
 
-            <View style={{ justifyContent: "flex-start" }} />
+            <View style={{ justifyContent: "flex-start" }}>
+              <TextInput
+                style={{ height: 40 }}
+                placeholder="Type here to translate!"
+                onChangeText={text => this.setState({ text })}
+                value={this.state.text}
+              />
+            </View>
           </View>
         </View>
 

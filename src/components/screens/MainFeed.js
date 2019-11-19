@@ -35,7 +35,7 @@ class MainFeed extends Component {
             onPress={() => {
               this.handleChoosePhoto();
             }}
-            title="Add 2"
+            title="Create Post"
             color={config.styleConstants.primaryColor}
             style={[styles.addButton, { color: "red" }]}
           />
