@@ -119,9 +119,51 @@ class UserInfo extends Component {
     }
 
     updateData() {
-        console.log(1111);
-    }
+        var _this = this;
 
+        var facebookUserData = _this.state.facebookUserData;
+
+        var postData = JSON.stringify({
+            provider_access_token: facebookUserData.credentials.token,
+            email: facebookUserData.profile.email,
+            first_name: facebookUserData.profile.name,
+            provider_id: facebookUserData.profile.id,
+            image: facebookUserData.profile.picture.data.url
+        });
+
+        fetch(config.systemConfig.baseUrl + "user", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + _this.state.access_token
+            },
+            body: postData
+        })
+            .then(res => res.json())
+            .then(response => {
+                _this.setState({
+                    user: response.data.user,
+                    token: response.data.token
+                });
+
+                AsyncStorage.setItem(
+                    "user",
+                    JSON.stringify(response.data.user)
+                );
+                AsyncStorage.setItem(
+                    "access_token",
+                    JSON.stringify(response.data.token)
+                );
+                AsyncStorage.setItem(
+                    "fb_access_token",
+                    JSON.stringify(facebookUserData.credentials.token)
+                );
+
+                _this.navigateToMainScreen();
+            })
+            .catch(err => console.log(err));
+    }
 
     async retrieveItem(key) {
         try {
@@ -227,10 +269,7 @@ class UserInfo extends Component {
                         />
                     </View>
 
-                    <Button
-                        title="Update"
-                        onPress={() => this.updateData()}
-                    />
+                    <Button title="Update" onPress={() => this.updateData()} />
                 </View>
             </View>
         );
@@ -262,7 +301,7 @@ const styles = StyleSheet.create({
         fontWeight: "600"
     },
     body: {
-        flexDirection: 'column',
+        flexDirection: "column",
         marginTop: 40
     },
     bodyContent: {

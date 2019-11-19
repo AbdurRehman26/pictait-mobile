@@ -70,10 +70,12 @@ class CreatePost extends Component {
 
     data.append("caption", "Test");
 
+    console.log(data);
+
     var headers = config.headers;
     headers.Authorization = "Bearer " + this.state.token;
     headers['Content-Length'] = 348792;
-    headers["Content-Type"] = `multipart/form-data; boundary=----WebKitFormBoundarykGStP0ItPYmTy6zh`
+    headers["Content-Type"] = `multipart/form-data;`
 
     console.log(data, headers);
 
