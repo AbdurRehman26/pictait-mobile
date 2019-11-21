@@ -18,6 +18,8 @@ class UserInfo extends Component {
         super(props);
 
         this.state = {
+            first_name: "",
+            last_name: "",
             show: false,
             mode: "date",
             date: new Date("2020-06-12T14:42:42"),
@@ -37,11 +39,10 @@ class UserInfo extends Component {
     }
 
     setDate = (event, date) => {
-        date = date || this.state.date;
-
+        console.log(date ,33333);
         this.setState({
             show: Platform.OS === "ios" ? true : false,
-            date
+            date_of_birth: date
         });
     };
 
@@ -91,7 +92,6 @@ class UserInfo extends Component {
         )
             .then(res => res.json())
             .then(response => {
-                console.log(response.response.data);
                 _this.setState({
                     countries: response.response.data
                 });
@@ -111,9 +111,15 @@ class UserInfo extends Component {
         })
             .then(res => res.json())
             .then(response => {
+                const userDetails = response.response.data;
+
                 _this.setState({
-                    userDetails: response.response.data
+                    userDetails
                 });
+
+                for (var i in userDetails) {
+                    _this.state[i] = userDetails[i];
+                }
             })
             .catch(err => console.log(err));
     }
@@ -180,7 +186,7 @@ class UserInfo extends Component {
         const { show, date, mode } = this.state;
 
         const userDetails = this.state.userDetails;
-        console.log(userDetails);
+        console.log(this.state);
         const user = this.state.user;
         const userImage = user
             ? user.image
@@ -193,8 +199,11 @@ class UserInfo extends Component {
         });
 
         let statusItems = this.state.maritalStatus.map((item, index) => {
-            return <Picker.Item key={item} value={item} label={item.name} />;
+            return <Picker.Item key={item.id} value={item.id} label={item.name} />;
         });
+
+
+        this.state.date_of_birth = this.state.date_of_birth ? new Date(this.state.date_of_birth) : this.state.date_of_birth;
 
         return (
             <View style={styles.container}>
@@ -209,25 +218,27 @@ class UserInfo extends Component {
                     <View style={styles.bodyContent}>
                         <Text>First Name </Text>
                         <TextInput
-                            value={userDetails.first_name}
+                            value={this.state.first_name}
                             placeholder=""
-                            onFocus={this.handleFocus}
-                            onBlur={this.handleBlur}
                             style={styles.textInput}
+                            onChangeText={first_name =>
+                                this.setState({ first_name })
+                            }
                         />
 
                         <Text>Last Name </Text>
                         <TextInput
-                            value={userDetails.last_name}
-                            onFocus={this.handleFocus}
-                            onBlur={this.handleBlur}
+                            value={this.state.last_name}
                             style={styles.textInput}
+                            onChangeText={last_name =>
+                                this.setState({ last_name })
+                            }
                         />
 
                         <Text>Birthday </Text>
                         {!show && (
                             <TextInput
-                                value={userDetails.dob}
+                                value={this.state.date_of_birth}
                                 style={styles.textInput}
                                 onFocus={this.datepicker}
                             />
@@ -235,7 +246,7 @@ class UserInfo extends Component {
 
                         {show && (
                             <DateTimePicker
-                                value={userDetails.date_of_birth}
+                                value={this.state.date_of_birth}
                                 is24Hour={true}
                                 display="default"
                                 onChange={this.setDate}
@@ -244,28 +255,32 @@ class UserInfo extends Component {
 
                         <Text>Status </Text>
 
+
+                        {this.state.status && (
                         <Picker
-                            selectedValue={userDetails.status}
+                            selectedValue={this.state.status.id}
                             style={{ height: 50, width: 100 }}
                         >
                             {statusItems}
                         </Picker>
+                        )}
 
                         <Text>Country </Text>
 
-                        <Picker
-                            selectedValue={this.state.language}
-                            style={{ height: 50, width: 400 }}
-                        >
-                            {countryItems}
-                        </Picker>
+                        {this.state.country && (
+                            <Picker
+                                selectedValue={this.state.country.id}
+                                style={{ height: 50, width: 400 }}
+                            >
+                                {countryItems}
+                            </Picker>
+                        )}
 
                         <Text>About me </Text>
                         <TextInput
-                            value={userDetails.bio}
-                            onFocus={this.handleFocus}
-                            onBlur={this.handleBlur}
+                            value={this.state.bio}
                             style={styles.textInput}
+                            onChangeText={bio => this.setState({ bio })}
                         />
                     </View>
 
