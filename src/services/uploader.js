@@ -1,56 +1,58 @@
-import axios from "./dataService";
+import config from "../config/index";
+import AsyncStorage from "@react-native-community/async-storage";
 
-function getExtension(filename) {
-  let parts = filename.split(".");
-  return parts[parts.length - 1];
+async function retrieveItem(key) {
+  console.log(key, 22222);
+  try {
+    const retrievedItem = await AsyncStorage.getItem(key);
+    const item = JSON.parse(retrievedItem);
+    return item;
+  } catch (error) {
+    console.log(error.message, 22222224232);
+  }
+  return;
 }
 
-export const isImage = filename => {
-  let ext = getExtension(filename.name);
-  switch (ext.toLowerCase()) {
-    case "jpg":
-    case "jpeg":
-    // case "gif":
-    // case "bmp":
-    case "png":
-      //etc
-      return true;
-  }
-  return false;
-};
+export const uploadImageCallBack = async (file, resolve, reject) => {
+  var headers = config.headers;
+  headers["Content-Length"] = 348792;
+  headers["Content-Type"] = `multipart/form-data;`;
+  retrieveItem("access_token")
+    .then(data => {
+      headers.Authorization = "Bearer " + data;
+    })
+    .catch(error => {
+      console.log("error", error);
+    });
 
-export const isVideo = filename => {
-  let ext = getExtension(filename.name);
-  switch (ext.toLowerCase()) {
-    // case "m4v":
-    // case "avi":
-    // case "mpg":
-    case "mp4":
-      // etc
-      return true;
-  }
-  return false;
-};
-
-export const uploadImageCallBack = (file, resolve, reject) => {
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", process.env.REACT_APP_API_KEY + "/newsletterUploader/image");
   const data = new FormData();
-  data.append("file", file);
-  xhr.setRequestHeader("sessionId", axios.defaults.headers.sessionId);
-  // data.append('upload_preset', 'vj7yela1');
-  xhr.send(data);
-  xhr.addEventListener("load", () => {
-    const response = JSON.parse(xhr.responseText);
-    let data = {
-      data: {
-        link: process.env.REACT_APP_API_KEY + response.data.url
-      }
-    };
-    return resolve(data);
+
+  data.append("file", {
+    file: file,
+    uri: file.uri,
+    type: file.type,
+    size: file.fileSize,
+    name: file.fileName
   });
-  xhr.addEventListener("error", () => {
-    const error = JSON.parse(xhr.responseText);
-    return reject(error);
-  });
+  data.append('key' , 'dare');
+
+  const url = config.systemConfig.baseUrl + "file/upload";
+
+  console.log(headers , url, data)
+  console.log('uploading image');
+
+  fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: data
+  })
+    .then(res => res.json())
+    .then(response => {
+      console.log('response2222' , response)
+      return resolve(response);
+    })
+    .catch(error => {
+      console.log('error1111' , error)
+      return reject(error);
+    });
 };

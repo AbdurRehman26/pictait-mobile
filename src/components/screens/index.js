@@ -7,6 +7,7 @@ import Profile from './Profile'
 import CameraComponent from './CameraComponent'
 import EventMain from './EventMain'
 import CreatePost from './CreatePost'
+import CreateDare from './CreateDare'
 import Test from './Test'
 import UserInfo from './UserInfo'
 export {
@@ -20,5 +21,6 @@ export {
     EventMain,
     Test,
     CreatePost,
+    CreateDare,
     UserInfo,
 }

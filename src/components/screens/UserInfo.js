@@ -39,7 +39,7 @@ class UserInfo extends Component {
     }
 
     setDate = (event, date) => {
-        console.log(date ,33333);
+        console.log(date, 33333);
         this.setState({
             show: Platform.OS === "ios" ? true : false,
             date_of_birth: date
@@ -127,17 +127,9 @@ class UserInfo extends Component {
     updateData() {
         var _this = this;
 
-        var facebookUserData = _this.state.facebookUserData;
+        var postData = JSON.stringify(this.state);
 
-        var postData = JSON.stringify({
-            provider_access_token: facebookUserData.credentials.token,
-            email: facebookUserData.profile.email,
-            first_name: facebookUserData.profile.name,
-            provider_id: facebookUserData.profile.id,
-            image: facebookUserData.profile.picture.data.url
-        });
-
-        fetch(config.systemConfig.baseUrl + "user", {
+        fetch(config.systemConfig.baseUrl + "user-detail", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -148,25 +140,9 @@ class UserInfo extends Component {
         })
             .then(res => res.json())
             .then(response => {
-                _this.setState({
-                    user: response.data.user,
-                    token: response.data.token
-                });
 
-                AsyncStorage.setItem(
-                    "user",
-                    JSON.stringify(response.data.user)
-                );
-                AsyncStorage.setItem(
-                    "access_token",
-                    JSON.stringify(response.data.token)
-                );
-                AsyncStorage.setItem(
-                    "fb_access_token",
-                    JSON.stringify(facebookUserData.credentials.token)
-                );
+                console.log(response , 22222);
 
-                _this.navigateToMainScreen();
             })
             .catch(err => console.log(err));
     }
@@ -185,7 +161,6 @@ class UserInfo extends Component {
     render() {
         const { show, date, mode } = this.state;
 
-        const userDetails = this.state.userDetails;
         console.log(this.state);
         const user = this.state.user;
         const userImage = user
@@ -199,11 +174,14 @@ class UserInfo extends Component {
         });
 
         let statusItems = this.state.maritalStatus.map((item, index) => {
-            return <Picker.Item key={item.id} value={item.id} label={item.name} />;
+            return (
+                <Picker.Item key={item.id} value={item.id} label={item.name} />
+            );
         });
 
-
-        this.state.date_of_birth = this.state.date_of_birth ? new Date(this.state.date_of_birth) : this.state.date_of_birth;
+        this.state.date_of_birth = this.state.date_of_birth
+            ? new Date(this.state.date_of_birth)
+            : this.state.date_of_birth;
 
         return (
             <View style={styles.container}>
@@ -255,20 +233,26 @@ class UserInfo extends Component {
 
                         <Text>Status </Text>
 
-
                         {this.state.status && (
-                        <Picker
-                            selectedValue={this.state.status.id}
-                            style={{ height: 50, width: 100 }}
-                        >
-                            {statusItems}
-                        </Picker>
+                            <Picker
+                                onValueChange={(itemValue, itemIndex) =>
+                                this.setState({status: itemValue})
+                                }
+                                selectedValue={this.state.status.id}
+                                style={{ height: 50, width: 100 }}
+                            >
+                                {statusItems}
+                            </Picker>
                         )}
 
                         <Text>Country </Text>
 
                         {this.state.country && (
                             <Picker
+
+                                onValueChange={(itemValue, itemIndex) =>
+                                this.setState({country: itemValue})
+                                }
                                 selectedValue={this.state.country.id}
                                 style={{ height: 50, width: 400 }}
                             >
@@ -280,7 +264,9 @@ class UserInfo extends Component {
                         <TextInput
                             value={this.state.bio}
                             style={styles.textInput}
-                            onChangeText={bio => this.setState({ bio })}
+                            onChangeText={bio =>
+                                this.setState({ bio })
+                            }
                         />
                     </View>
 

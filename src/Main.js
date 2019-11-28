@@ -5,6 +5,7 @@ import {
     MainDareFeed,
     MainFeed,
     CreatePost,
+    CreateDare,
     EventMain,
     UserInfo,
     Profile,
@@ -15,11 +16,10 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 
 const TabNavigator = createBottomTabNavigator(
     {
-        userInfo : UserInfo,
-        feed : MainFeed,
-        profile: Profile,        
         dares: MainDareFeed,
+        feed : MainFeed,
         events : MainEventFeeds,
+        profile: Profile,        
     }       
     );
     
@@ -30,6 +30,7 @@ const TabNavigator = createBottomTabNavigator(
         camera : CameraComponent,
         eventMain : EventMain,
         createPost : CreatePost,
+        createDare : CreateDare,
         userInfo : UserInfo
     });
     

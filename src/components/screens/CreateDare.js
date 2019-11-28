@@ -6,7 +6,8 @@ import {
   Button,
   TextInput,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  FlatList
 } from "react-native";
 import { Content, Container } from "native-base";
 import { CommentsList } from "../container";
@@ -15,6 +16,7 @@ import { withNavigation } from "react-navigation";
 import config from "../../config/index";
 
 import { postFeed } from "../../services/dataService";
+import SearchBar from "react-native-dynamic-search-bar";
 
 class CreatePost extends Component {
   constructor(props) {
@@ -22,7 +24,9 @@ class CreatePost extends Component {
 
     this.state = {
       screenWidth: Dimensions.get("window").width,
-      text: ""
+      text: "",
+      users: [],
+      challenger: {}
     };
   }
 
@@ -57,97 +61,132 @@ class CreatePost extends Component {
       .catch(error => {});
   }
 
-  postData(item) {
-    const data = new FormData();
+  searchUser(user) {
+    var _this = this;
+
+    const url =
+      config.systemConfig.baseUrl + "user/search/follower?keyword=" + user;
+
+    fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + _this.state.token
+      }
+    })
+      .then(res => res.json())
+      .then(response => {
+        
+        _this.setState({
+          users: response.response.data
+        });
+        console.log( "users list");
+      })
+      .catch(err => console.log(err));
+  }
+
+  postData() {
+
     const _this = this;
 
-    data.append("image", {
-      file: item,
-      uri: item.uri,
-      type: item.type,
-      size: item.fileSize,
-      name: item.fileName
-    });
+    const { navigation } = this.props;
 
-    data.append("caption", this.state.text);
+    const data = JSON.stringify({
+      challenger_id : this.state.challenger.id,
+      status: 'pending',
+      userImage: navigation.getParam("imageUrl"),
+    });
 
     var headers = config.headers;
     headers.Authorization = "Bearer " + this.state.token;
     headers["Content-Length"] = 348792;
-    headers["Content-Type"] = `multipart/form-data;`;
+    headers["Content-Type"] = `application/json`;
 
-    console.log(data, 'sending call');
-    
+    console.log(data, "sending call");
 
-    fetch(config.systemConfig.baseUrl + "post", {
+    fetch(config.systemConfig.baseUrl + "dare", {
       method: "POST",
       headers: headers,
       body: data
     })
       .then(res => res.json())
       .then(response => {
-        
-        console.log(response, "response");
 
-        _this.props.navigation.navigate("feed");
+          navigation.navigate("dares")
+
       })
       .catch(error => {
-        console.log(error, 3333313);
+
       });
   }
+
+  selectChallenger(user){
+
+    this.setState({ 
+
+      challenger : user,
+      users: []
+
+    })
+  }
+
 
   render() {
     const { navigation } = this.props;
     const imageHeight = this.state.screenWidth;
 
     const item = navigation.getParam("photo");
-    const imageUri = item.uri;
+    const imageUri = item ? item.uri : "";
     const userImage = this.state.user ? this.state.user.image : "";
     const displayName = this.state.user ? this.state.user.first_name : "";
-
+    
     return (
-      <View style={styles.container}>
-        <View style={styles.userBar}>
-          <View style={{ flexDirection: "row" }}>
-            <Image style={styles.userPic} source={{ uri: userImage }} />
-
-            <View style={{ justifyContent: "flex-start" }}>
-              <TextInput
-                style={{ height: 40 }}
-                placeholder="Type here to translate!"
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View
-          style={{
-            padding: 10,
-            marginLeft: 10,
-            alignContent: "space-around",
-            alignItems: "flex-start"
+      <View>
+        <SearchBar
+          placeholder="Search here"
+          onChangeText={text => {
+            this.searchUser(text);
+          }}
+          onPressCancel={() => {
+            this.filterList("");
           }}
         />
 
         <View>
-          <Image
-            style={{ width: imageHeight, height: imageHeight * 1.1 }}
-            source={{ uri: imageUri }}
+
+        <Text> Selected Value : {this.state.challenger ? this.state.challenger.first_name : ''} </Text>
+
+        </View>
+
+        <View>
+          <FlatList
+            data={this.state.users}
+            renderItem={({ item }) => (
+              <Text
+              onPress={() => this.selectChallenger(item) }
+              style={{ padding: 20, fontSize: 20 }}>{item.first_name}</Text>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+
           />
         </View>
 
-        <View style={styles.iconBar} />
 
-        <Button
-          onPress={() => {
-            this.postData(item);
-          }}
-          title="Save"
-          color={config.styleConstants.primaryColor}
-          style={[styles.addButton, { color: "red" }]}
-        />
+          {this.state.challenger.first_name &&  <Button
+            onPress={() => {
+              
+              this.postData()
+
+            }}
+            title="Create"
+            color={config.styleConstants.primaryColor}
+            style={[styles.addButton, { color: "red" }]}
+          />
+          }
+        
+
+
       </View>
     );
   }
