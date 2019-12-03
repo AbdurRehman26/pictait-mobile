@@ -168,6 +168,7 @@ class Post extends Component {
 
                 <View
                     style={{
+                        marginTop: 10,
                         padding: 10,
                         marginLeft: 10,
                         alignContent: "space-around",
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
         width: 100 + "%"
     },
     iconBar: {
-        height: config.styleConstants.defaultRowHeight + 10,
+        height: config.styleConstants.defaultRowHeight,
         borderColor: "rgb(233,233,233)",
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderTopWidth: StyleSheet.hairlineWidth,
@@ -283,15 +284,15 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     icon: {
-        height: config.styleConstants.defaultRowHeight - 10,
-        width: config.styleConstants.defaultRowWidth - 10,
+        height: config.styleConstants.defaultRowHeight - 20,
+        width: config.styleConstants.defaultRowWidth - 20,
         marginRight: 10,
         marginLeft: 10,
         marginTop: 10
     },
     commentsBar: {
-        paddingBottom: 10,
-        height: config.styleConstants.defaultRowHeight + 5,
+        paddingBottom: 5,
+        height: config.styleConstants.defaultRowHeight,
         borderColor: "rgb(233,233,233)",
         borderBottomWidth: StyleSheet.hairlineWidth,
         flexDirection: "row",

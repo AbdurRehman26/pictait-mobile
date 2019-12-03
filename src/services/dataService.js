@@ -6,7 +6,7 @@ const headers = {
 
 const postFeed = params => {
 
-    return fetch('http://pictait.com/api/post', {
+    return fetch('http://snappyt.com/api/post', {
       method: "POST",
       headers: headers,
       body: params

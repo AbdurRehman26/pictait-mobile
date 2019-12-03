@@ -11,24 +11,13 @@ import { Content, Container, Button } from "native-base";
 import AsyncStorage from "@react-native-community/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Timeline, Follower } from "../screens/event";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import config from "../../config/index";
 
 var width = Dimensions.get("window").width;
 
-var images = [
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833",
-  "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/38669435_883158928550525_3026722204348841984_n.jpg?_nc_cat=107&_nc_oc=AQlsFdKnqkbCC3qEMGm-xa6-oSkiuwyYwkeLOdzWz5m_AisBbfp5dpAMC1m68Ot3H_Y&_nc_ht=scontent.fkhi10-1.fna&oh=80e8f1e1c42541e7c9f4e904ecf7d6c3&oe=5DB0E833"
-];
+var images = [];
 
 class EventMain extends Component {
   constructor(props) {
@@ -135,40 +124,55 @@ class EventMain extends Component {
               <Text style={{ padding: 10 }}>{eventData.description}</Text>
             </View>
 
-            <View style={styles.bottomBar}>
-              <Text
-                style={[
-                  styles.icon,
-                  { width: config.styleConstants.defaultRowWidth }
-                ]}
-              >
-                {eventData.followers} Followers
-              </Text>
-              <Text
-                style={[
-                  styles.icon,
-                  { width: config.styleConstants.defaultRowWidth }
-                ]}
-              >
-                {eventData.number_of_images} Images
-              </Text>
-              <Text
-                style={[
-                  styles.icon,
-                  { width: config.styleConstants.defaultRowWidth }
-                ]}
-              >
-                {eventData.privacy_type}
-              </Text>
-              <Text
-                style={[
-                  styles.icon,
-                  { width: config.styleConstants.defaultRowWidth }
-                ]}
-              >
-                {eventData.status}{" "}
-              </Text>
-            </View>
+                <View style={styles.bottomBar}>
+                    <Text
+                        style={[
+                            styles.icon,
+                            { width: config.styleConstants.defaultRowWidth }
+                        ]}
+                    >
+                        <Ionicons name="ios-contacts" size={25} />
+
+                        {eventData.followers ? eventData.followers : "0"}
+                    </Text>
+
+                    <Text
+                        style={[
+                            styles.icon,
+                            { width: config.styleConstants.defaultRowWidth }
+                        ]}
+                    >
+                        <Ionicons name="ios-images" size={25} color="#6c50a5" />
+
+                        {eventData.number_of_images}
+                    </Text>
+
+                    <Text
+                        style={[
+                            styles.icon,
+                            { width: config.styleConstants.defaultRowWidth }
+                        ]}
+                    >
+                        <Ionicons name="ios-lock" size={25} />
+
+                        {eventData.privacy_type}
+                    </Text>
+
+                    <Text
+                        style={[
+                            styles.icon,
+                            { width: config.styleConstants.defaultRowWidth }
+                        ]}
+                    >
+                        <Ionicons
+                            name="ios-skip-backward"
+                            color="green"
+                            size={25}
+                        />
+
+                        {eventData.status}
+                    </Text>
+                </View>
 
             <View>
               <View
@@ -246,6 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   icon: {
+    borderRightWidth: 1,
     height: config.styleConstants.defaultRowHeight - 10,
     width: config.styleConstants.defaultRowWidth - 10,
     marginRight: 10,

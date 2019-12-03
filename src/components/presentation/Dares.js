@@ -16,7 +16,7 @@ class Dare extends Component{
         const item = this.props.item
         
         return (
-            <View style={{ flex : 1 , flexDirection : 'row'}}>
+            <View style={ styles.container,  { flex : 1 , flexDirection : 'row'}}>
             
             <DarePost 
             itemId={item._id}
@@ -46,6 +46,7 @@ class Dare extends Component{
     }
     
     const styles = StyleSheet.create({
+
     });
     
     export default withNavigation(Dare);

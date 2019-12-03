@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, TouchableOpacity, Button, View } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import { PostFeed } from "../container";
 import config from "../../config";
 import { withNavigation } from "react-navigation";
 import ImagePicker from "react-native-image-picker";
+import SpinnerButton from "react-native-spinner-button";
+import customStyles from "../../styles";
 
 class MainFeed extends Component {
   constructor(props) {
@@ -24,21 +26,21 @@ class MainFeed extends Component {
         this.props.navigation.navigate("createPost", { photo: response });
       }
     });
-  
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={{ margin: 20 }} activeOpacity={1}>
-          <Button
+        <TouchableOpacity style={{ margin: 10 }} activeOpacity={1}>
+          <SpinnerButton
+            buttonStyle={customStyles.defaultButton}
             onPress={() => {
               this.handleChoosePhoto();
             }}
-            title="Create Post"
-            color={config.styleConstants.primaryColor}
-            style={[styles.addButton, { color: "red" }]}
-          />
+            indicatorCount={10}
+          >
+            <Text style={customStyles.defaultButtonText}>ADD</Text>
+          </SpinnerButton>
         </TouchableOpacity>
 
         <View>

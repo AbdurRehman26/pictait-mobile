@@ -10,6 +10,13 @@ import {
 import config from "../../config/index";
 import { withNavigation } from "react-navigation";
 import AsyncStorage from "@react-native-community/async-storage";
+import {
+    Card,
+    CardImage,
+    CardTitle,
+    CardContent,
+    CardAction
+} from "react-native-card-view";
 
 class DarePost extends Component {
     lastTap = null;
@@ -118,75 +125,86 @@ class DarePost extends Component {
         const likeCount = this.state.likeCount;
 
         return (
-            <View style={styles.container}>
-                <View style={styles.userBar}>
-                    <TouchableOpacity
-                        style={{ flexDirection: "row" }}
-                        activeOpacity={1}
-                        onPress={() => {
-                            this.navigateToProfile(this.props.user);
-                        }}
-                    >
-                        <Image
-                            style={styles.userPic}
-                            source={{ uri: userImage }}
-                        />
+            <Card>
+                <View elevation={1} style={styles.container}>
+                    <View>
+                        <TouchableOpacity
+                            style={{ flexDirection: "row" }}
+                            activeOpacity={1}
+                            onPress={() => {
+                                this.navigateToProfile(this.props.user);
+                            }}
+                        >
+                            <Image
+                                style={styles.userPic}
+                                source={{ uri: userImage }}
+                            />
 
-                        <View style={{ justifyContent: "flex-start" }}>
-                            <Text
-                                style={{ fontWeight: "bold", marginLeft: 10 }}
-                            >
-                                {displayName}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                            <CardContent>
+                                <Text style={styles.title}>{displayName}</Text>
+                            </CardContent>
+                        </TouchableOpacity>
+                    </View>
 
-                <TouchableOpacity activeOpacity={1}>
-                    <Image
-                        style={[
-                            styles.image,
-                            { width: imageHeight, height: imageHeight * 1.1 }
-                        ]}
-                        source={{ uri: imageUri }}
-                    />
-                </TouchableOpacity>
-
-                <View
-                    style={[styles.iconBar, { flex: 1, flexDirection: "row" }]}
-                >
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.handleDoubleTap();
-                        }}
-                    >
+                    <CardImage>
                         <Image
                             style={[
-                                styles.icon,
-                                { tintColor: heartLikedColor }
+                                styles.image,
+                                {
+                                    width: imageHeight,
+                                    height: imageHeight * 1.1
+                                }
                             ]}
-                            source={config.image.likeIcon}
+                            source={{ uri: imageUri }}
                         />
-                    </TouchableOpacity>
-                    <Text
-                        style={[
-                            styles.icon,
-                            {
-                                width:
-                                    config.styleConstants.defaultRowWidth + 35
-                            }
-                        ]}
-                    >
-                        {likeCount ? likeCount : 0} Likes
-                    </Text>
+                    </CardImage>
+
+                    <CardAction>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.handleDoubleTap();
+                            }}
+                        >
+                            <Image
+                                style={[
+                                    styles.icon,
+                                    { tintColor: heartLikedColor }
+                                ]}
+                                source={config.image.likeIcon}
+                            />
+                        </TouchableOpacity>
+                        <Text
+                            style={[
+                                styles.icon,
+                                {
+                                    width:
+                                        config.styleConstants.defaultRowWidth +
+                                        35
+                                }
+                            ]}
+                        >
+                            {likeCount ? likeCount : 0} Likes
+                        </Text>
+                    </CardAction>
                 </View>
-            </View>
+            </Card>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        borderWidth: 0.5,
+        borderLeftWidth: 0.5,
+    },
+    title: {
+        fontSize: 14,
+        backgroundColor: "transparent",
+        marginTop: -10,
+        marginLeft: -10
+    },
     userPic: {
+        padding: 5,
         height: 35,
         width: 35,
         borderRadius: 20
@@ -201,15 +219,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
 
-    container: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderTopWidth: StyleSheet.hairlineWidth,
-        borderLeftWidth: StyleSheet.hairlineWidth,
-        borderRightWidth: StyleSheet.hairlineWidth,
-        flex: 1,
-        width: 100 + "%",
-        marginTop: 10
-    },
     iconBar: {
         height: config.styleConstants.defaultRowHeight + 1,
         borderColor: "rgb(233,233,233)",
@@ -221,14 +230,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 5
     },
-    commentsBar: {
-        paddingBottom: 10,
-        height: config.styleConstants.defaultRowHeight + 5,
-        borderColor: "rgb(233,233,233)",
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
     image: {
+        borderRadius: 15,
         borderWidth: 10
     }
 });

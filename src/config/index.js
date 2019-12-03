@@ -10,7 +10,7 @@ export default {
         primaryColor: "#6c50a5"
     },
     systemConfig: {
-        baseUrl: "https://pictait.com/api/"
+        baseUrl: "https://snappyt.com/api/"
     },
 
     headers: {
