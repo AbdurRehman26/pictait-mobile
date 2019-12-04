@@ -14,11 +14,15 @@ export default class SliderEntry extends Component {
     };
 
     get image () {
-        const { data: { illustration }, parallax, parallaxProps, even } = this.props;
+        
+        console.log(this.props)
+
+        const { data: { entry }, parallax, parallaxProps, even } = this.props;
+        console.log(entry , 32);
 
         return parallax ? (
             <ParallaxImage
-              source={{ uri: illustration }}
+              source={{ uri: entry.upload_url }}
               containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
               style={styles.image}
               parallaxFactor={0.35}
@@ -28,7 +32,7 @@ export default class SliderEntry extends Component {
             />
         ) : (
             <Image
-              source={{ uri: illustration }}
+              source={{ uri: entry.upload_url }}
               style={styles.image}
             />
         );
@@ -36,15 +40,6 @@ export default class SliderEntry extends Component {
 
     render () {
         const { data: { title, subtitle }, even } = this.props;
-
-        const uppercaseTitle = title ? (
-            <Text
-              style={[styles.title, even ? styles.titleEven : {}]}
-              numberOfLines={2}
-            >
-                { title.toUpperCase() }
-            </Text>
-        ) : false;
 
         return (
             <TouchableOpacity
@@ -56,15 +51,6 @@ export default class SliderEntry extends Component {
                 <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
                     { this.image }
                     <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />
-                </View>
-                <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
-                    { uppercaseTitle }
-                    <Text
-                      style={[styles.subtitle, even ? styles.subtitleEven : {}]}
-                      numberOfLines={2}
-                    >
-                        { subtitle }
-                    </Text>
                 </View>
             </TouchableOpacity>
         );
